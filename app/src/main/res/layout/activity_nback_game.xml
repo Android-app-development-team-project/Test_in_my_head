@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/thema_Color_3"
+    android:orientation="vertical"
+    tools:context=".NBackGame">
+
+    <TextView
+        android:id="@+id/levelTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="연습게임"
+        android:textColor="#656060"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/examView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/thema_Color_2"
+            android:gravity="center"
+            android:text="1"
+            android:textColor="#4F4B4B"
+            android:textSize="100sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/examView2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#DBD0C0"
+            android:gravity="center"
+            android:text="2"
+            android:textSize="100sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/startBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/thema_Color_4"
+            android:onClick="onClickStart"
+            android:text="START"
+            android:textColor="#656060"
+            android:textSize="40sp"
+            android:visibility="visible"
+            app:strokeColor="#635A5A"
+            app:strokeWidth="2dp" />
+
+        <Button
+            android:id="@+id/answerBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@color/thema_Color_4"
+            android:onClick="onClickO"
+            android:text="O"
+            android:textColor="#656060"
+            android:textSize="40sp"
+            android:textStyle="bold"
+            android:visibility="visible"
+            app:strokeColor="#635A5A"
+            app:strokeWidth="2dp" />
+
+        <Button
+            android:id="@+id/answerBtn2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@color/thema_Color_4"
+            android:onClick="onClickO2"
+            android:text="O2"
+            android:textColor="#656060"
+            android:textSize="40sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:strokeColor="#635A5A"
+            app:strokeWidth="2dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/resultView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="정답지"
+            android:textColor="#656060"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/resultView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="정답지2"
+            android:textColor="#656060"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/sumResultView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.2"
+        android:gravity="center"
+        android:text="sumScore"
+        android:textColor="#656060"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:visibility="gone" />
+
+</LinearLayout>

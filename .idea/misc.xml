@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/dblab/AndroidStudioProjects/-/app/src/main/res/layout/activity_join_membership.xml" value="0.25" />
+        <entry key="..\:/Users/dblab/AndroidStudioProjects/-/app/src/main/res/layout/activity_login.xml" value="0.23777173913043478" />
+        <entry key="..\:/Users/dblab/AndroidStudioProjects/-/app/src/main/res/layout/activity_main.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/dblab/AndroidStudioProjects/-/app/src/main/res/layout/activity_nback_game.xml" value="0.17617753623188406" />
+        <entry key="..\:/Users/dblab/AndroidStudioProjects/-/app/src/main/res/layout/activity_nback_help.xml" value="0.17617753623188406" />
+        <entry key="..\:/Users/dblab/AndroidStudioProjects/-/app/src/main/res/layout/activity_nback_practice_game_setting.xml" value="0.17617753623188406" />
+        <entry key="..\:/Users/dblab/AndroidStudioProjects/-/app/src/main/res/layout/activity_rank.xml" value="0.28020833333333334" />
+        <entry key="..\:/Users/dblab/AndroidStudioProjects/-/app/src/main/res/layout/listitem.xml" value="0.5" />
+        <entry key="..\:/Users/mjh31/AndroidStudioProjects/A_test_in_my_head/app/src/main/res/drawable/border.xml" value="0.18888888888888888" />
+        <entry key="..\:/Users/mjh31/AndroidStudioProjects/A_test_in_my_head/app/src/main/res/layout/activity_guess_number_in_game.xml" value="0.5536458333333333" />
+        <entry key="..\:/Users/mjh31/AndroidStudioProjects/A_test_in_my_head/app/src/main/res/layout/activity_guess_number_main.xml" value="0.5536458333333333" />
+        <entry key="..\:/Users/mjh31/AndroidStudioProjects/A_test_in_my_head/app/src/main/res/layout/activity_main.xml" value="0.5390625" />
+        <entry key="..\:/Users/mjh31/AndroidStudioProjects/A_test_in_my_head/app/src/main/res/layout/activity_success.xml" value="0.22010869565217392" />
+        <entry key="..\:/Users/mjh31/AndroidStudioProjects/A_test_in_my_head/app/src/main/res/layout/activity_timeout.xml" value="0.33" />
+        <entry key="..\:/Users/mjh31/AndroidStudioProjects/A_test_in_my_head/app/src/main/res/layout/activity_wrong.xml" value="0.22010869565217392" />
+        <entry key="..\:/Users/mjh31/AndroidStudioProjects/A_test_in_my_head/app/src/main/res/layout/fragment_guess_number_button_click.xml" value="0.5536458333333333" />
+        <entry key="..\:/Users/mjh31/AndroidStudioProjects/A_test_in_my_head2/app/src/main/res/drawable/border.xml" value="0.1" />
+        <entry key="..\:/Users/mjh31/AndroidStudioProjects/A_test_in_my_head2/app/src/main/res/layout/activity_dwdmhelp.xml" value="0.33177083333333335" />
+        <entry key="..\:/Users/mjh31/AndroidStudioProjects/A_test_in_my_head2/app/src/main/res/layout/activity_guess_number_help.xml" value="0.33" />
+        <entry key="..\:/Users/mjh31/AndroidStudioProjects/A_test_in_my_head2/app/src/main/res/layout/activity_guess_number_in_game.xml" value="0.43458475540386804" />
+        <entry key="..\:/Users/mjh31/AndroidStudioProjects/A_test_in_my_head2/app/src/main/res/layout/activity_guess_number_in_game_hard.xml" value="0.171225937183384" />
+        <entry key="..\:/Users/mjh31/AndroidStudioProjects/A_test_in_my_head2/app/src/main/res/layout/activity_guess_number_main.xml" value="0.16058763931104356" />
+        <entry key="..\:/Users/mjh31/AndroidStudioProjects/A_test_in_my_head2/app/src/main/res/layout/activity_main.xml" value="0.16058763931104356" />
+        <entry key="..\:/Users/mjh31/AndroidStudioProjects/A_test_in_my_head2/app/src/main/res/layout/activity_nback.xml" value="0.21479229989868287" />
+        <entry key="..\:/Users/mjh31/AndroidStudioProjects/A_test_in_my_head2/app/src/main/res/layout/activity_nback_game.xml" value="0.21479229989868287" />
+        <entry key="..\:/Users/mjh31/AndroidStudioProjects/A_test_in_my_head2/app/src/main/res/layout/activity_nback_help.xml" value="0.3171875" />
+        <entry key="..\:/Users/mjh31/AndroidStudioProjects/A_test_in_my_head2/app/src/main/res/layout/activity_nback_main.xml" value="0.21479229989868287" />
+        <entry key="..\:/Users/mjh31/AndroidStudioProjects/A_test_in_my_head2/app/src/main/res/layout/activity_nback_practice_game_setting.xml" value="0.21479229989868287" />
+        <entry key="..\:/Users/mjh31/AndroidStudioProjects/A_test_in_my_head2/app/src/main/res/layout/activity_success.xml" value="0.21" />
+        <entry key="..\:/Users/mjh31/AndroidStudioProjects/A_test_in_my_head2/app/src/main/res/layout/d_w_d_m_help_fragment.xml" value="0.33177083333333335" />
+        <entry key="..\:/Users/mjh31/AndroidStudioProjects/A_test_in_my_head2/app/src/main/res/layout/main_activity.xml" value="0.2115036231884058" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

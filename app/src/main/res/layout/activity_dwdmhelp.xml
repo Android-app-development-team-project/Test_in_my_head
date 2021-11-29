@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".GuessNumberHelp">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="540dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text=" \n먼제 메인 페이지입니다. 게임은 easy모드, hard모드로 구성되어있고 모드당 게임의 룰이 조금 변경됩니다.\n\n\n -easy모드 \n\n 1) 총 5초의 시간이 주어지고, 연산해서 맞춰야되는 문제의 결과 값을 나타내줍니다.\n5초 동안 16개 칸 안에있는 값들을 클릭하면서 연산을 해서 계산 결과가 문제 값과 같으면 성공! 틀리거나, 시간이 지나면 실패입니다.
+
+\n 16개 칸을 누르는 방법은 처음 클릭 시 입력한 숫자 1 옆에 숫자에 표시, 두번째 클릭 시 입력한 숫자 2 옆에 값이 나타납니다.
+
+\n 3번째 클릭할 때에는 숫자가 아닌 연산자(+, -, *, /)를 눌러줘야됩니다. 누르면 결과 값 옆에 값이 바뀌고 값이 동일하다면 제출 버튼을 누르면 됩니다.
+
+\n 숫자는 처음 누르면 입력한 숫자 1이 바뀌고 다음으로 누르면 입력한 숫자 2가 변경이 되는데 다음 클릭에 연산 버튼이 아닌 숫자 버튼을 누르게 되면 다시 입력한 숫자 1이 변경됩니다.
+
+\n 성공 시 문제 값과 결과 값의 text 색이 파란색으로 변경이 되고, 성공 activity가 뜨게 됩니다. (임시로 Toast를 넣어놨습니다.)
+\n\n\n\n\n -hard 모드
+\n\n  처음 5초의 시간이 주어집니다. 5초동안은 16개의 칸을 클릭하면 아무런 반응이 일어나지 않습니다. 5초가 지난 뒤에 문제의 값이 주어지고 칸의 모든 숫자, 연산이 사라집니다. 즉, 이전의 5초 동안 숫자, 연산에 대한 칸의 위치를 기억하고 5초가 지나고 문제가 주어졌을 때 문제를 맞추는 방식입니다."
+                android:textColor="#B4B4B4"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:typeface="normal" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <Button
+        android:id="@+id/backmainbtn"
+        android:layout_width="383dp"
+        android:layout_height="36dp"
+        android:layout_weight="1"
+        android:text="메인화면으로 돌아가기" />
+
+</LinearLayout>

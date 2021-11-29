@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/thema_Color_2"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".NBackPracticeGameSetting">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:gravity="center"
+        android:text="N Back Test"
+        android:textSize="50sp" />
+
+    <Button
+        android:id="@+id/StartPracticeGame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/thema_Color_4"
+        android:gravity="center"
+        android:onClick="onClickStartPractice"
+        android:text="연습 게임 시작!"
+        android:textColor="#656060"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:strokeColor="#635A5A"
+        app:strokeWidth="2dp" />
+
+    <LinearLayout
+        android:id="@+id/nLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.2"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/nMinusBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@color/thema_Color_4"
+            android:onClick="onClickNMinusBtn"
+            android:text="-"
+            android:textColor="#656060"
+            android:textStyle="bold"
+            app:strokeColor="#635A5A"
+            app:strokeWidth="2dp" />
+
+        <TextView
+            android:id="@+id/nText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="5.5"
+            android:gravity="center"
+            android:text="N = 2"
+            android:textSize="20sp"
+            android:textColor="#656060"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/nPlusBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@color/thema_Color_4"
+            android:onClick="onClickNPlusBtn"
+            android:text="+"
+            android:textColor="#656060"
+            android:textStyle="bold"
+            app:strokeColor="#635A5A"
+            app:strokeWidth="2dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lengthLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/lengthMinusBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@color/thema_Color_4"
+            android:onClick="onClickLengthMinusBtn"
+            android:text="-"
+            android:textColor="#656060"
+            android:textStyle="bold"
+            app:strokeColor="#635A5A"
+            app:strokeWidth="2dp" />
+
+        <TextView
+            android:id="@+id/lengthText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2.5"
+            android:gravity="center"
+            android:text="문제 길이 = 7"
+            android:textColor="#656060"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/lengthPlusBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@color/thema_Color_4"
+            android:onClick="onClickLengthPlusBtn"
+            android:text="+"
+            android:textColor="#656060"
+            android:textStyle="bold"
+            app:strokeColor="#635A5A"
+            app:strokeWidth="2dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/dTimeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.2"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/dTimeMinusBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@color/thema_Color_4"
+            android:onClick="onClickDTimeMinusBtn"
+            android:text="-"
+            android:textColor="#656060"
+            android:textStyle="bold"
+            app:strokeColor="#635A5A"
+            app:strokeWidth="2dp" />
+
+        <TextView
+            android:id="@+id/dTimeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:gravity="center"
+            android:text="한 문제당 시간 = 2초"
+            android:textColor="#656060"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/dTimePlusBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@color/thema_Color_4"
+            android:onClick="onClickDTimePlusBtn"
+            android:text="+"
+            android:textColor="#656060"
+            android:textStyle="bold"
+            app:strokeColor="#635A5A"
+            app:strokeWidth="2dp" />
+    </LinearLayout>
+
+    <Switch
+        android:id="@+id/parallelSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minHeight="48dp"
+        android:onClick="onClickSwitch"
+        android:text="Dual ON/OFF"
+        android:textColor="#656060"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.1"
+        android:text="TextView"
+        android:visibility="invisible" />
+
+    <Button
+        android:id="@+id/backBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/thema_Color_4"
+        android:gravity="center"
+        android:onClick="onClickBackBtn"
+        android:text="뒤로가기"
+        android:textColor="#656060"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:strokeColor="#635A5A"
+        app:strokeWidth="2dp" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.5"
+        android:text="TextView"
+        android:visibility="invisible" />
+
+</LinearLayout>

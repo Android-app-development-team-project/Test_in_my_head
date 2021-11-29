@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="1"
+    android:background="@color/thema_Color_2"
+    android:gravity="top"
+    android:orientation="vertical"
+    tools:context=".NBackMain">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.3"
+        android:gravity="center"
+        android:text="N Back Test"
+        android:textSize="50sp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="TextView"
+        android:visibility="invisible" />
+
+    <Button
+        android:id="@+id/levelTestBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:backgroundTint="@color/thema_Color_4"
+        android:onClick="onClickLevelTest"
+        android:text="레벨 테스트!"
+        android:textSize="30sp"
+        android:textColor="#656060"
+        android:textStyle="bold"
+        app:strokeColor="#635A5A"
+        app:strokeWidth="2dp"
+        android:visibility="visible" />
+
+    <Button
+        android:id="@+id/practiceBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/thema_Color_4"
+        android:onClick="onClickPractice"
+        android:text="연습하기"
+        android:textColor="#656060"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:strokeColor="#635A5A"
+        app:strokeWidth="2dp"
+        android:visibility="visible" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="TextView"
+        android:visibility="invisible" />
+
+</LinearLayout>
