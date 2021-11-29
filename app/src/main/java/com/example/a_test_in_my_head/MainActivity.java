@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        user = new User("public", 0,0,0,0);
+        user = new User("public", "0","0","0","0");
 
         Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
         startActivity(loginIntent);
@@ -134,7 +134,6 @@ public class MainActivity extends AppCompatActivity {
         Intent intent3 = new Intent(MainActivity.this, RankActivity.class);
         intent3.putExtra("user", user);
         startActivity(intent3);
-        finish();
     }
     public void consolUser(){
         Log.i("", user.getNickname());

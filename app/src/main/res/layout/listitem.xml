@@ -10,7 +10,8 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="rank" />
+        android:text="rank"
+        android:textSize="24sp" />
 
     <TextView
         android:id="@+id/nickname"
@@ -18,7 +19,8 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="nickname" />
+        android:text="nick"
+        android:textSize="24sp" />
 
     <TextView
         android:id="@+id/nBackScore"
@@ -26,7 +28,8 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="nBack" />
+        android:text="nBack"
+        android:textSize="24sp" />
 
     <TextView
         android:id="@+id/dwmtScore"
@@ -34,7 +37,8 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="dwmt" />
+        android:text="dwmt"
+        android:textSize="24sp" />
 
     <TextView
         android:id="@+id/guessNumScore"
@@ -42,8 +46,8 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="guessNum"
-        android:textSize="14sp" />
+        android:text="guess"
+        android:textSize="24sp" />
 
     <TextView
         android:id="@+id/totalScore"
@@ -51,5 +55,6 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="total" />
+        android:text="total"
+        android:textSize="24sp" />
 </LinearLayout>

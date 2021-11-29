@@ -69,11 +69,7 @@ public class LoginActivity extends AppCompatActivity {
             switch (resResult[0]){
                 case "Login success":
                     Intent intent = getIntent();
-                    intent.putExtra("user", new User(resResult[1],
-                                            Integer.parseInt(resResult[2]),
-                                            Integer.parseInt(resResult[3]),
-                                            Integer.parseInt(resResult[4]),
-                                            Integer.parseInt(resResult[5])));
+                    intent.putExtra("user", new User(resResult[1], resResult[2], resResult[3],resResult[4],resResult[5]));
                     finish();
                     break;
                 case "Login id fail":
