@@ -12,141 +12,98 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.concurrent.ExecutionException;
+
 public class MainActivity extends AppCompatActivity {
-    private long backKeyPressedTime=0;
-    private User user;
-
-    @Override
-    public void onBackPressed() {
-        if(System.currentTimeMillis()>backKeyPressedTime+2000){
-            backKeyPressedTime=System.currentTimeMillis();
-            Toast.makeText(this,"뒤로가기 버튼을 한번 더 누르시면 종료됩니다!",Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if(System.currentTimeMillis()<=backKeyPressedTime+2000){
-            finishAffinity();
-            System.runFinalization();
-            System.exit(0);
-        }
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        boolean k_f = intent.getBooleanExtra("kill", false);
-        if(k_f == true){
-            finish();
-        }
-    }
+    private final String loginURL = "http://192.168.0.10:3000/login";
+    private EditText id;
+    private EditText password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
 
-        user = new User("public", "0","0","0","0");
+        id = findViewById(R.id.id);
+        password = findViewById(R.id.password);
 
-        Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
-        startActivity(loginIntent);
+    }
 
-        setContentView(R.layout.activity_main);
-        Button button1 = (Button) findViewById(R.id.guessnumber);
-        button1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent myintent1 = new Intent(MainActivity.this,GuessNumberMain.class);
-                startActivity(myintent1);
-                finish();
+    public void onClickLoginBtn(View view){
+
+        //json obj 생성 및 저장
+        JSONObject loginJsonObj = new JSONObject();
+
+        // ex) "select * from member_info WHERE id = 'id';", "select * from member_info WHERE password = 'password'";
+        String loginIdSQL =  "SELECT * FROM member_info WHERE id = '" +id.getText() + "';";
+
+        Log.i("sql", loginIdSQL);
+
+        String secretPassword = "";
+
+        //비밀번호 암호화 코드
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-512");
+            md.update(password.getText().toString().getBytes());
+            secretPassword = String.format("%128x", new BigInteger(1, md.digest()));
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
+
+        try {
+            loginJsonObj.accumulate("loginIdSQL", loginIdSQL);
+            loginJsonObj.accumulate("password", secretPassword);
+
+            RequestingServer req = new RequestingServer(this, loginJsonObj);              // 요청 객체 생성
+
+            String response = req.execute(loginURL).get();
+            Log.i("LoginActivity", "result: " + response);
+
+            if (response == null)
+                return;
+
+            String[] resResult = response.split(",");
+
+            switch (resResult[0]){
+                case "Login success":
+                    Intent menuIntent = new Intent(MainActivity.this, MenuActivity.class);
+                    menuIntent.putExtra("user", new User(resResult[1], resResult[2], resResult[3],resResult[4],resResult[5]));
+                    startActivity(menuIntent);
+                    break;
+                case "Login id fail":
+                    Toast.makeText(this, "id가 틀렸습니다!", Toast.LENGTH_SHORT).show();
+                    break;
+                case "Login pw fail":
+                    Toast.makeText(this, "비밀번호가 틀렸습니다!", Toast.LENGTH_SHORT).show();
+                    break;
             }
-        });
-        Button button2 = (Button) findViewById(R.id.nback);
-        button2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent myintent2 = new Intent(MainActivity.this,NBackMain.class);
-                startActivity(myintent2);
-                finish();
-            }
-        });
-        Button listButton = (Button) findViewById(R.id.exit);
-        listButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                builder.setMessage("정말로 종료하시겠습니까?");
-                builder.setTitle("종료 알림창")
-                        .setCancelable(false)
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int i) {
-                                finishAffinity();
-                                System.runFinalization();
-                                System.exit(0);
-                            }
-                        })
-                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int i) {
-                                dialog.cancel();
-                            }
-                        });
-                AlertDialog alert = builder.create();
-                alert.setTitle("종료 알림창");
-                alert.show();
-            }
-        });
-
-
-
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
-    public void onClickGuessHint(View view){
-        Intent intent3 = new Intent(MainActivity.this,GuessNumberHelp.class);
-        startActivity(intent3);
-        finish();
-/*        if(view==alert){ //view가 alert 이면 팝업실행 즉 버튼을 누르면 팝업창이 뜨는 조건
-            Context mContext = getApplicationContext();
-            LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
 
-            View layout = inflater.inflate(R.layout.dialog,(ViewGroup) findViewById(R.id.popup));
-            android.app.AlertDialog.Builder aDialog = new android.app.AlertDialog.Builder(MainActivity.this);
-            aDialog.setTitle("히든스탯 목록"); //타이틀바 제목
-            aDialog.setView(layout); //dialog.xml 파일을 뷰로 셋팅
-            aDialog.setNegativeButton("닫기", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                }
-            });
-            android.app.AlertDialog ad = aDialog.create();
+    public void onClickJoinBtn(View view){
+        Intent intent = new Intent(this, JoinMembershipActivity.class);
+        startActivity(intent);
+    }
 
-            ad.show();//보여줌!*/
-    }
-    public void onClickDWDMHelp(View view){
-        Intent intent3 = new Intent(MainActivity.this, DWDMHelp.class);
-        startActivity(intent3);
-        finish();
-    }
-    public void onClickNBackHelp(View view){
-        Intent intent3 = new Intent(MainActivity.this, DWDMHelp.class);
-        startActivity(intent3);
-        finish();
-    }
-    public void onClickRankBtn(View view){
-        Intent intent3 = new Intent(MainActivity.this, RankActivity.class);
-        intent3.putExtra("user", user);
-        startActivity(intent3);
-    }
-    public void consolUser(){
-        Log.i("", user.getNickname());
-        Log.i("", user.getnBackScore() + "");
-        Log.i("", user.getDwmtScore() + "");
-        Log.i("", user.getGuessNumberScore() + "");
-        Log.i("", user.getTotalScore() + "");
-    }
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        Log.i("intent", "LoginActivityResult answerType: " + data.getIntExtra("answerType", 1) + "  data: " + data.getIntExtra("checkType", 1));
-
-        user = (User) data.getSerializableExtra("user");
-        consolUser();
+    public void finishBtn(View view){
+        Intent menuIntent = new Intent(MainActivity.this, MenuActivity.class);
+        menuIntent.putExtra("user", new User("public", "0","0","0","0"));
+        startActivity(menuIntent);
     }
 }

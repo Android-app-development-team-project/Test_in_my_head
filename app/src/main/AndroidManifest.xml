@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.A_test_in_my_head">
         <activity
+            android:name=".MenuActivity"
+            android:exported="true" />
+        <activity
             android:name=".RankActivity"
             android:exported="true" />
         <activity

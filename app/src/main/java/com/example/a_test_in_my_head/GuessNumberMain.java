@@ -47,11 +47,11 @@ public class GuessNumberMain extends AppCompatActivity {
             return;
         }
         if(System.currentTimeMillis()<=backKeyPressedTime+2000){
-                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                finish();
-            }
+//            Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+//            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//            startActivity(intent);
+            finish();
+        }
 
     }
     @Override

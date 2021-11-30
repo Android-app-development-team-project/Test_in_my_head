@@ -9,11 +9,18 @@ import android.widget.Button;
 import android.widget.Toast;
 
 public class NBackMain extends AppCompatActivity {
+    private long backKeyPressedTime = 0;
+
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
+        if(System.currentTimeMillis()>backKeyPressedTime+2000){
+            backKeyPressedTime=System.currentTimeMillis();
+            Toast.makeText(this,"뒤로가기 버튼을 한번 더 누르시면 return home!",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(System.currentTimeMillis()<=backKeyPressedTime+2000){
+            finish();
+        }
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {

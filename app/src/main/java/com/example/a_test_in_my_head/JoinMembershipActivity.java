@@ -20,7 +20,8 @@ import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.ExecutionException;
 
 public class JoinMembershipActivity extends AppCompatActivity {
-
+    private final String checkOverlapURL = "http://192.168.0.10:3000/checkOverlap";
+    private final String joinURL = "http://192.168.0.10:3000/join";
     private EditText name;
     private EditText id;
     private EditText password;
@@ -28,10 +29,11 @@ public class JoinMembershipActivity extends AppCompatActivity {
     private EditText nickname;
     private EditText phoneNumber;
     private EditText email;
-    private TextView checkingTextView;
     private Boolean idOverlapFlag;
     private Boolean nicknameOverlapFlag;
     private Boolean pwCheckFlag;
+    private Boolean phoneNumCheckFlag;
+    private Boolean emailCheckFlag;
 
     private String secretPassword;
     private JSONObject JsonObj;
@@ -49,11 +51,12 @@ public class JoinMembershipActivity extends AppCompatActivity {
         nickname = findViewById(R.id.nicknameEditText);
         phoneNumber = findViewById(R.id.phoneNumberEditText);
         email = findViewById(R.id.emailEditText);
-        checkingTextView = findViewById(R.id.checkingTextView);
 
         idOverlapFlag = false;
         pwCheckFlag = false;
         nicknameOverlapFlag = false;
+        phoneNumCheckFlag = false;
+        emailCheckFlag = false;
     }
 
     public void onClickCheckOverlap(View v){
@@ -74,8 +77,7 @@ public class JoinMembershipActivity extends AppCompatActivity {
             JsonObj.accumulate("overlapSQL", OverlapSQL);
 
             RequestingServer req = new RequestingServer(this, JsonObj);
-
-            String response = req.execute("http://192.168.0.10:3000/checkOverlap").get();
+            String response = req.execute(checkOverlapURL).get();
             Log.i(tag, "result: " + response);
 
             if (response == null)
@@ -130,6 +132,77 @@ public class JoinMembershipActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "비밀번호가 서로 다릅니다!", Toast.LENGTH_SHORT).show();
     }
 
+    public void onClickCheckPhoneNumber(View v){
+        String phoneNum = phoneNumber.getText().toString();
+
+        if (phoneNum.length() != 13)
+            Toast.makeText(getApplicationContext(), "전화번호 '-'포함 13자리를 작성해주세요!", Toast.LENGTH_SHORT).show();
+        else if ((phoneNum.charAt(3) != '-') || (phoneNum.charAt(8) != '-'))
+            Toast.makeText(getApplicationContext(), "4번째, 8번째 자리에 '-'를 포함해서 작성해주세요!", Toast.LENGTH_SHORT).show();
+        else if (CheckChar(phoneNum)) {                                                                              
+            Toast.makeText(getApplicationContext(), "전화번호 확인이 완료되었습니다!", Toast.LENGTH_SHORT).show();
+            phoneNumCheckFlag = true;
+        }
+        else
+            Toast.makeText(getApplicationContext(), "전화번호에 숫자만 넣어주세요!", Toast.LENGTH_SHORT).show();
+    }
+    
+    // 전화번호에 문자가 들어갔는지 검사하는 메소드
+    public Boolean CheckChar(String phoneNum){
+        String numberChar = "0123456789";
+
+        for (int i=0; i<phoneNum.length(); i++){
+            if ((i == 3) || (i == 8)) continue;
+            if (!(numberChar.contains(phoneNum.charAt(i)+"")))
+                return false;
+            Log.i(tag, "CheckCharacter: " + i);
+        }
+        return true;
+    }
+    
+    public void onClickCheckEmail(View v){
+
+        String emailText = email.getText().toString();
+
+        String[] emailSplitAt = emailText.split("@");
+        String[] emailSplitDot = emailText.split("[.]");             //  '.' 스플릿 시 "[.]" or "\\."
+//        Log.i(tag, "emailTextSplit.length(): " + emailSplitAt.length);
+//        Log.i(tag, "emailTextSplit2.length(): " + emailSplitDot.length);
+
+        if ((emailSplitDot.length < 2) || (emailSplitDot.length > 2)) {
+            Toast.makeText(getApplicationContext(), "이메일 형식에 맞게 작성해주세요!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        String[] emailSplitAt2 = emailSplitDot[0].split("@");
+
+        if (emailText.length() > 30)
+            Toast.makeText(getApplicationContext(), "이메일은 30자리를 넘을 수 없습니다!", Toast.LENGTH_SHORT).show();
+        else if ((emailSplitAt.length < 2) || (emailSplitAt.length > 2))
+            Toast.makeText(getApplicationContext(), "'@'를 형식에 맞게 작성해주세요!", Toast.LENGTH_SHORT).show();
+        else if ((emailSplitAt[0].length() < 1) || (emailSplitAt[1].length() < 1))
+            Toast.makeText(getApplicationContext(), "@ 이전 혹은 이후에 값이 없습니다!", Toast.LENGTH_SHORT).show();
+        else if ((emailSplitAt2.length < 2) || (emailSplitDot[1].length() < 1))
+            Toast.makeText(getApplicationContext(), "'.' 이전 혹은 이후에 값이 없습니다!", Toast.LENGTH_SHORT).show();
+        else if (!emailSplitDot[1].equals("com"))
+            Toast.makeText(getApplicationContext(), "'.com'으로 작성해주세요!", Toast.LENGTH_SHORT).show();
+        else if (CheckSpecialChar(emailText))
+            Toast.makeText(getApplicationContext(), "'@'와 '.'을 제외한 특수문자가 있습니다!", Toast.LENGTH_SHORT).show();
+        else
+            Toast.makeText(getApplicationContext(), "이메일 확인이 완료되었습니다!", Toast.LENGTH_SHORT).show();
+    }
+
+    // 이메일에 특수문자가 들어갔는지 검사하는 메소드 => 있으면 true, 없으면 false
+    public Boolean CheckSpecialChar(String emailText){
+        String specialChar = "~!#$%^&*()_+`-={}|[]\\:\";'<>?,/ ";      // '@', '.'을 제외한 특수문자들
+
+        for (int i=0; i<emailText.length(); i++){
+            Log.i(tag, "CheckSpecialChar: " + emailText.charAt(i) + "  i: " +i);
+            if (specialChar.contains(emailText.charAt(i)+""))
+                return true;
+        }
+        return false;
+    }
+
     public void onClickJoin(View v){
 
         if (!idOverlapFlag)
@@ -138,6 +211,10 @@ public class JoinMembershipActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "비밀번호 확인 완료하셔야 합니다!", Toast.LENGTH_SHORT).show();
         else if (!nicknameOverlapFlag)
             Toast.makeText(getApplicationContext(), "닉네임 중복 확인 완료하셔야 합니다!", Toast.LENGTH_SHORT).show();
+        else if (!phoneNumCheckFlag)
+            Toast.makeText(getApplicationContext(), "전화번호 확인 완료하셔야 합니다!", Toast.LENGTH_SHORT).show();
+        else if (!emailCheckFlag)
+            Toast.makeText(getApplicationContext(), "이메일 확인 완료하셔야 합니다!", Toast.LENGTH_SHORT).show();
         else {
             JsonObj = new JSONObject();
 
@@ -155,7 +232,7 @@ public class JoinMembershipActivity extends AppCompatActivity {
 
                 RequestingServer req = new RequestingServer(this, JsonObj);              // 요청 객체 생성
 
-                String response = req.execute("http://192.168.0.10:3000/join").get();
+                String response = req.execute(joinURL).get();
                 Log.i(tag, "result: " + response);
 
                 if (response == null)

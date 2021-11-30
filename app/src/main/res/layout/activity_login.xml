@@ -4,9 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/thema_Color_2"
     android:gravity="center"
     android:orientation="vertical"
     tools:context=".LoginActivity">
+
+    <TextView
+        android:id="@+id/loginTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="로그인"
+        android:textColor="@color/thema_Color_5"
+        android:textSize="80sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/padding"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="80sp" />
 
     <EditText
         android:id="@+id/id"
@@ -14,6 +31,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="ID"
+        android:textSize="30sp"
         android:inputType="textPersonName" />
 
     <EditText
@@ -22,6 +40,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="password"
+        android:textSize="30sp"
         android:inputType="textPassword" />
 
     <Button
@@ -29,19 +48,37 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="onClickLoginBtn"
-        android:text="login" />
+        android:text="login"
+        android:backgroundTint="@color/thema_Color_4"
+        android:textColor="@color/thema_Color_5"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:strokeColor="#635A5A"
+        app:strokeWidth="2dp" />
 
     <Button
         android:id="@+id/joinMembershipBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="onClickJoinBtn"
-        android:text="회원가입" />
+        android:text="회원가입"
+        android:backgroundTint="@color/thema_Color_4"
+        android:textColor="@color/thema_Color_5"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:strokeColor="#635A5A"
+        app:strokeWidth="2dp" />
 
     <Button
         android:id="@+id/finishBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="finishBtn"
-        android:text="finish" />
+        android:text="로그인 없이 하기!"
+        android:backgroundTint="@color/thema_Color_4"
+        android:textColor="@color/thema_Color_5"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:strokeColor="#635A5A"
+        app:strokeWidth="2dp" />
 </LinearLayout>

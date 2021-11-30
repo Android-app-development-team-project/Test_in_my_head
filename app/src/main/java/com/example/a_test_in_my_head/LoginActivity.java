@@ -18,8 +18,10 @@ import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.ExecutionException;
 
 public class LoginActivity extends AppCompatActivity {
-    EditText id;
-    EditText password;
+    private final String loginURL = "http://192.168.0.10:3000/login";
+    private EditText id;
+    private EditText password;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +37,7 @@ public class LoginActivity extends AppCompatActivity {
         //json obj 생성 및 저장
         JSONObject loginJsonObj = new JSONObject();
 
-        // ex) select * from member_info WHERE id = 'id';   ,  select * from member_info WHERE password = 'password';
+        // ex) "select * from member_info WHERE id = 'id';", "select * from member_info WHERE password = 'password'";
         String loginIdSQL =  "SELECT * FROM member_info WHERE id = '" +id.getText() + "';";
 
         Log.i("sql", loginIdSQL);
@@ -58,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
 
             RequestingServer req = new RequestingServer(this, loginJsonObj);              // 요청 객체 생성
 
-            String response = req.execute("http://192.168.0.10:3000/login").get();
+            String response = req.execute(loginURL).get();
             Log.i("LoginActivity", "result: " + response);
 
             if (response == null)
@@ -70,6 +72,8 @@ public class LoginActivity extends AppCompatActivity {
                 case "Login success":
                     Intent intent = getIntent();
                     intent.putExtra("user", new User(resResult[1], resResult[2], resResult[3],resResult[4],resResult[5]));
+                    intent.putExtra("loginFlag", true);
+                    setResult(RESULT_OK, intent);
                     finish();
                     break;
                 case "Login id fail":

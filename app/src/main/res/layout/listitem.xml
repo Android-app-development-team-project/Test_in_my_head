@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/listitem"
+    android:id="@+id/RankListItem"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/thema_Color_4">
 
     <TextView
         android:id="@+id/rank"
@@ -10,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="rank"
+        android:text="Rank"
         android:textSize="24sp" />
 
     <TextView
@@ -19,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="nick"
+        android:text="Nick"
         android:textSize="24sp" />
 
     <TextView
@@ -28,7 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="nBack"
+        android:text="NB"
         android:textSize="24sp" />
 
     <TextView
@@ -37,7 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="dwmt"
+        android:text="DT"
         android:textSize="24sp" />
 
     <TextView
@@ -46,7 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="guess"
+        android:text="GN"
         android:textSize="24sp" />
 
     <TextView
@@ -55,6 +56,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="total"
+        android:text="Total"
         android:textSize="24sp" />
+
 </LinearLayout>

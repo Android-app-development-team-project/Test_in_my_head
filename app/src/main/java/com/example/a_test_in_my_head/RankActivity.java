@@ -22,9 +22,9 @@ import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
 
 public class RankActivity extends AppCompatActivity {
-
-//    static final String[] LIST_MENU = {"LIST1", "LIST2", "LIST3"} ;
+    private final String showRankURL = "http://192.168.0.10:3000/showRank";
     private ListView list;
+    private RankList adapter;
     private String rankSql;
     private User users[];
     private JSONObject rabkJsonObj;
@@ -37,13 +37,9 @@ public class RankActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rank);
         textViewIdArray = new int[]{R.id.rank, R.id.nickname, R.id.nBackScore, R.id.dwmtScore, R.id.guessNumScore, R.id.totalScore};
-
         users = new User[11];
-        users[0] = new User("닉네임", "NBack", "DWMT", "GuessNum", "Total");
-
-        // 1~10 SQL
-        rankSql = "SELECT * FROM score ORDER BY total DESC LIMIT 10;";
-
+        users[0] = new User("닉네임", "NB", "DT", "GN", "Total");
+        rankSql = "SELECT * FROM score ORDER BY total DESC LIMIT 10;";      // 1~10 SQL
         rabkJsonObj = new JSONObject();
 
         try {
@@ -51,7 +47,7 @@ public class RankActivity extends AppCompatActivity {
 
             RequestingServer req = new RequestingServer(this, rabkJsonObj);
 
-            String response = req.execute("http://192.168.0.10:3000/showRank").get();
+            String response = req.execute(showRankURL).get();
             Log.i(tag, "result: " + response);
 
             if (response == null)
@@ -91,10 +87,33 @@ public class RankActivity extends AppCompatActivity {
         }
         
 
-        RankList adapter = new RankList(this);
+        adapter = new RankList(this);
 
         list = (ListView) findViewById(R.id.listView);
         list.setAdapter(adapter);
+    }
+
+    public void onClickShowOneRank(View v){
+        switch (v.getId()){
+            case R.id.nBackBtn:
+//                rankSql = "SELECT * FROM score ORDER BY total DESC LIMIT 10;"
+                break;
+            case R.id.dwmtBtn:
+                break;
+            case R.id.guessNumBtn:
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void onClickTotalBtn(View v){
+        onRestart();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
     }
 
     public class RankList extends ArrayAdapter<String> {
@@ -119,6 +138,9 @@ public class RankActivity extends AppCompatActivity {
             // textViewIdArray = new int[]{R.id.rank, R.id.nickname, R.id.nBackScore, R.id.dwmtScore, R.id.guessNumScore, R.id.totalScore};
             for (int i=0; i<textViewIdArray.length; i++)
                 ((TextView) rowView.findViewById(textViewIdArray[i])).setText(textAraay[i]);
+
+            if (position==0)
+                ((TextView) rowView.findViewById(textViewIdArray[0])).setText("랭킹");
 
             return rowView;
         }
