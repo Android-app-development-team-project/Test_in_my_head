@@ -36,7 +36,9 @@ public class MenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent myintent1 = new Intent(MenuActivity.this,GuessNumberMain.class);
+                myintent1.putExtra("user", user);
                 startActivity(myintent1);
+
             }
         });
         Button button2 = (Button) findViewById(R.id.nback);
@@ -44,6 +46,7 @@ public class MenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent myintent2 = new Intent(MenuActivity.this,NBackMain.class);
+                myintent2.putExtra("user", user);
                 startActivity(myintent2);
             }
         });
@@ -127,9 +130,9 @@ public class MenuActivity extends AppCompatActivity {
         startActivity(intent3);
     }
     public void onClickRankBtn(View view){
-        Intent intent3 = new Intent(MenuActivity.this, RankActivity.class);
-        intent3.putExtra("user", user);
-        startActivity(intent3);
+        Intent rankIntent = new Intent(MenuActivity.this, RankActivity.class);
+        rankIntent.putExtra("user", user);
+        startActivity(rankIntent);
     }
     public void consolUser(){
         Log.i(tag, user.getNickname());

@@ -13,7 +13,7 @@
         android:id="@+id/listView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="visible">
+        android:visibility="gone">
 
     </ListView>
 
@@ -23,7 +23,9 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="Show Rank"
-        android:textSize="30sp" />
+        android:textColor="@color/thema_Color_5"
+        android:textSize="45sp"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -35,16 +37,28 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:onClick="onClickShowPartRank"
             android:text="NB"
-            android:textSize="30sp" />
+            android:textSize="30sp"
+            android:backgroundTint="@color/thema_Color_4"
+            android:textColor="@color/thema_Color_5"
+            android:textStyle="bold"
+            app:strokeColor="#635A5A"
+            app:strokeWidth="2dp" />
 
         <Button
             android:id="@+id/dwmtBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:onClick="onClickShowPartRank"
             android:text="DWMT"
-            android:textSize="30sp" />
+            android:textSize="30sp"
+            android:backgroundTint="@color/thema_Color_4"
+            android:textColor="@color/thema_Color_5"
+            android:textStyle="bold"
+            app:strokeColor="#635A5A"
+            app:strokeWidth="2dp" />
 
     </LinearLayout>
 
@@ -58,15 +72,42 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:onClick="onClickShowPartRank"
             android:text="GN"
-            android:textSize="30sp" />
+            android:textSize="30sp"
+            android:backgroundTint="@color/thema_Color_4"
+            android:textColor="@color/thema_Color_5"
+            android:textStyle="bold"
+            app:strokeColor="#635A5A"
+            app:strokeWidth="2dp" />
 
         <Button
             android:id="@+id/totalBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:backgroundTint="@color/thema_Color_4"
+            android:onClick="onClickShowAllRank"
             android:text="Total"
-            android:textSize="30sp" />
+            android:textColor="@color/thema_Color_5"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:strokeColor="#635A5A"
+            app:strokeWidth="2dp" />
+
     </LinearLayout>
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:backgroundTint="@color/thema_Color_4"
+        android:onClick="onClickShowMyRank"
+        android:text="My Rank"
+        android:textColor="@color/thema_Color_5"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:strokeColor="#635A5A"
+        app:strokeWidth="2dp" />
 </LinearLayout>

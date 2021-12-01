@@ -23,6 +23,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.ExecutionException;
 
+
 public class MainActivity extends AppCompatActivity {
     private final String loginURL = "http://192.168.0.10:3000/login";
     private EditText id;
@@ -31,37 +32,24 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_main);
 
         id = findViewById(R.id.id);
         password = findViewById(R.id.password);
-
     }
 
     public void onClickLoginBtn(View view){
-
         //json obj 생성 및 저장
         JSONObject loginJsonObj = new JSONObject();
-
-        // ex) "select * from member_info WHERE id = 'id';", "select * from member_info WHERE password = 'password'";
-        String loginIdSQL =  "SELECT * FROM member_info WHERE id = '" +id.getText() + "';";
-
-        Log.i("sql", loginIdSQL);
-
         String secretPassword = "";
 
-        //비밀번호 암호화 코드
         try {
+            //비밀번호 암호화 코드
             MessageDigest md = MessageDigest.getInstance("SHA-512");
             md.update(password.getText().toString().getBytes());
             secretPassword = String.format("%128x", new BigInteger(1, md.digest()));
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
 
-
-        try {
-            loginJsonObj.accumulate("loginIdSQL", loginIdSQL);
+            loginJsonObj.accumulate("id", id.getText());
             loginJsonObj.accumulate("password", secretPassword);
 
             RequestingServer req = new RequestingServer(this, loginJsonObj);              // 요청 객체 생성
@@ -87,6 +75,8 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(this, "비밀번호가 틀렸습니다!", Toast.LENGTH_SHORT).show();
                     break;
             }
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
         } catch (JSONException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {

@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.text.Layout;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -22,7 +23,10 @@ public class NBackGame extends AppCompatActivity {
     private int level;
     private boolean parallel;
     private int examNum;
+    private int nBackScore;
     private final float passScoreRatio = 0.28f;
+    private User user;
+    private String tag = "NBackGame";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,20 +34,22 @@ public class NBackGame extends AppCompatActivity {
         setContentView(R.layout.activity_nback_game);
 
         Intent intent = getIntent();
+        user = (User) intent.getSerializableExtra("user");
 
         nBackList = new ArrayList<NBack>();
         mode = intent.getBooleanExtra("mode", true);          // mode: true는 랭킹 모드, false는 연습 모드
         parallel = intent.getBooleanExtra("parallel", false);
+        nBackScore = 0;
 
         // intent를 통해 가져온 매개변수를 가지고 NBack 객체 초기화
         nBackList.add( new NBack(intent.getIntExtra("n", 2),
                 intent.getIntExtra("examLength", 7),
-                intent.getIntExtra("delayTime", 1),
+                intent.getIntExtra("delayTime", 2),
                 findViewById(R.id.examView),
                 findViewById(R.id.resultView)));
 
 
-        Log.i("intent", "mode: "+ mode + "\nN: " + nBackList.get(0).getN() +
+        Log.i(tag, "mode: "+ mode + "\nN: " + nBackList.get(0).getN() +
                 "\nlength: " + nBackList.get(0).getExamLength() +
                 "\ndelay: " + nBackList.get(0).getDelayTime() +
                 "\nparallel: " + parallel);
@@ -67,7 +73,7 @@ public class NBackGame extends AppCompatActivity {
             nBackList.get(1).getExamView().setVisibility(View.VISIBLE);
         }
 
-        Log.i("listSize", "listSize: " + nBackList.size());
+        Log.i(tag, "listSize: " + nBackList.size());
     }
 
     public void onClickStart(View startView) {
@@ -134,7 +140,7 @@ public class NBackGame extends AppCompatActivity {
             nBackList.get(i).getExamView().setVisibility(View.VISIBLE);
         }
 
-        Log.i("userAnswer","userAnswer: " + nBackList.get(0).getUserAnswer());
+        Log.i(tag,"userAnswer: " + nBackList.get(0).getUserAnswer());
 
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -164,7 +170,7 @@ public class NBackGame extends AppCompatActivity {
         if (examNum >= nBackList.get(0).getN() && examNum < nBackList.get(0).getExamLength()) {             // "O" 버튼 클릭시  userAnswer의 "O" 추가
             nBackList.get(0).setUserAnswer(examNum);
 
-            Log.i("userAnswer","userAnswer: " + nBackList.get(0).getUserAnswer() +
+            Log.i(tag,"userAnswer: " + nBackList.get(0).getUserAnswer() +
                     " examNum: " + examNum +
                     " Exam: " + nBackList.get(0).getExam().charAt(examNum));
         }
@@ -190,19 +196,22 @@ public class NBackGame extends AppCompatActivity {
             sumScore += nBackList.get(i).getScore();
             nBackList.get(i).getResultView().setVisibility(View.VISIBLE);
         }
+        nBackScore += Math.round(sumScore);
 
         if (nBackList.size()>1){
             sumResultView.setText("Score 합: " + sumScore);
             sumResultView.setVisibility(View.VISIBLE);
         }
-
-
-        if (sumScore >= Math.floor(nBackList.get(0).getExamLength()*passScoreRatio) && mode)                      // 합격 점수 이상일 때
+        if (sumScore >= Math.floor(nBackList.get(0).getExamLength()*passScoreRatio) && mode) {                      // 합격 점수 이상일 때
+            Log.i(tag, "nBackScore: " + nBackScore + ", user.getnBackScore(): " + user.getnBackScore()
+                    +", Math.round(sumScore): " + Math.round(sumScore) +" , sumScore: " + sumScore);
+            if (Integer.parseInt(user.getnBackScore()) < nBackScore)
+                user.setScore(this, "N_Back", nBackScore);
             levelUP();
+        }
     }
 
     public void levelUP(){
-
         ((TextView)findViewById(R.id.levelTextView)).setText("랭크게임: LEVEL " + (++level));
         if (level==1)
             return;

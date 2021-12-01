@@ -4,102 +4,81 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/thema_Color_2"
+    android:gravity="center"
     android:orientation="vertical"
-    tools:context=".MainActivity" >
+    tools:context=".MainActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="232dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="158dp"
-            android:layout_weight="1"
-            android:text="내 머리속의 테스트"
-            android:textSize="50sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="241dp"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="81dp"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/guessnumber"
-                android:layout_width="259dp"
-                android:layout_height="wrap_content"
-                android:text="같은 숫자 찾기" />
-
-            <Button
-                android:id="@+id/geussnumberhelp"
-                android:layout_width="115dp"
-                android:layout_height="wrap_content"
-                android:onClick="onClickGuessHint"
-                android:text="게임 도움말" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="92dp"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/nback"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:onClick="onClickNBack"
-                android:text="N Back Test" />
-
-            <Button
-                android:id="@+id/nbackhelp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:onClick="onClickNBackHelp"
-                android:text="게임 도움말" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="65dp"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/dwdm"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="DWDM 트레이닝" />
-
-            <Button
-                android:id="@+id/dwdmhelp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:onClick="onClickDWDMHelp"
-                android:text="게임 도움말" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/rankBtn"
+    <TextView
+        android:id="@+id/loginTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="onClickRankBtn"
-        android:text="랭킹 보기" />
+        android:gravity="center"
+        android:text="내 머릿 속의 테스트"
+        android:textColor="@color/thema_Color_5"
+        android:textSize="45sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/padding"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="80sp" />
+
+    <EditText
+        android:id="@+id/id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="ID"
+        android:textSize="30sp"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="password"
+        android:textSize="30sp"
+        android:inputType="textPassword" />
 
     <Button
-        android:id="@+id/exit"
-        android:layout_width="wrap_content"
+        android:id="@+id/loginBtn"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="종료" />
+        android:onClick="onClickLoginBtn"
+        android:text="login"
+        android:backgroundTint="@color/thema_Color_4"
+        android:textColor="@color/thema_Color_5"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:strokeColor="#635A5A"
+        app:strokeWidth="2dp" />
 
+    <Button
+        android:id="@+id/joinMembershipBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClickJoinBtn"
+        android:text="회원가입"
+        android:backgroundTint="@color/thema_Color_4"
+        android:textColor="@color/thema_Color_5"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:strokeColor="#635A5A"
+        app:strokeWidth="2dp" />
+
+    <Button
+        android:id="@+id/finishBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="finishBtn"
+        android:text="로그인 없이 하기!"
+        android:backgroundTint="@color/thema_Color_4"
+        android:textColor="@color/thema_Color_5"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:strokeColor="#635A5A"
+        app:strokeWidth="2dp" />
 </LinearLayout>

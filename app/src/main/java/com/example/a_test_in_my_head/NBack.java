@@ -1,7 +1,3 @@
-
-
-
-
 package com.example.a_test_in_my_head;
 
 import android.util.Log;

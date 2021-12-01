@@ -20,8 +20,8 @@ public class NBackPracticeGameSetting extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nback_practice_game_setting);
         n = 2;
-        examLength = 10;
-        delayTime = 1;
+        examLength = 7;
+        delayTime = 2;
         parallel = false;
     }
 

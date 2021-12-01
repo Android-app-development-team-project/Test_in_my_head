@@ -62,19 +62,14 @@ public class JoinMembershipActivity extends AppCompatActivity {
     public void onClickCheckOverlap(View v){
 
         JsonObj = new JSONObject();
-        String OverlapSQL = "";
-        Boolean idOrNicknameFlag = v.getId() == R.id.idCheckBtn;                        // id: ture, nickname: false
-
-        if (idOrNicknameFlag)                                                                           // id 중복 확인 버튼이라면
-            OverlapSQL = "SELECT * FROM member_info WHERE id = '" + id.getText() + "';";                // ex) select * from member_info WHERE id = 'park';
-        else                                                                                            // 아니면 닉네임 중복 확인 버튼
-            OverlapSQL = "SELECT * FROM member_info WHERE nickname = '" + nickname.getText() + "';";
-        
-        Log.i(tag, OverlapSQL);
-
+        Boolean overlapFlag = v.getId() == R.id.idCheckBtn;                        // id: ture, nickname: false
+        Log.i(tag, "overlapFlag: " + overlapFlag);
 
         try {
-            JsonObj.accumulate("overlapSQL", OverlapSQL);
+            if (overlapFlag)
+                JsonObj.accumulate("id", id.getText());
+            else
+                JsonObj.accumulate("nickname", nickname.getText());
 
             RequestingServer req = new RequestingServer(this, JsonObj);
             String response = req.execute(checkOverlapURL).get();
@@ -88,7 +83,7 @@ public class JoinMembershipActivity extends AppCompatActivity {
 
             switch (resResult[0]){
                 case "can be used":
-                    if (idOrNicknameFlag)
+                    if (overlapFlag)
                         idOverlapFlag = true;
                     else
                         nicknameOverlapFlag = true;
@@ -187,8 +182,10 @@ public class JoinMembershipActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "'.com'으로 작성해주세요!", Toast.LENGTH_SHORT).show();
         else if (CheckSpecialChar(emailText))
             Toast.makeText(getApplicationContext(), "'@'와 '.'을 제외한 특수문자가 있습니다!", Toast.LENGTH_SHORT).show();
-        else
+        else {
             Toast.makeText(getApplicationContext(), "이메일 확인이 완료되었습니다!", Toast.LENGTH_SHORT).show();
+            emailCheckFlag = true;
+        }
     }
 
     // 이메일에 특수문자가 들어갔는지 검사하는 메소드 => 있으면 true, 없으면 false
@@ -218,17 +215,13 @@ public class JoinMembershipActivity extends AppCompatActivity {
         else {
             JsonObj = new JSONObject();
 
-            // ex) insert into member_info values ('id', 'pw', 'park', '123-4567-8910', 'e-mail', 'pack');  ,    insert into score values ('pack', 0, 0, 0, 0);
-            String memberInfoSQL =  "INSERT INTO member_info values ('" +id.getText() + "', '" + secretPassword + " ', '" +
-                    name.getText() + " ', '" + phoneNumber.getText() + " ', '" +email.getText() + " ', '" +nickname.getText() + "');";
-            String scoreSQL = "INSERT INTO score values ('" +nickname.getText() + "', 0, 0, 0, 0);";
-
-            Log.i(tag, memberInfoSQL);
-            Log.i(tag, scoreSQL);
-
             try {
-                JsonObj.accumulate("memberInfoSQL", memberInfoSQL);
-                JsonObj.accumulate("scoreSQL", scoreSQL);
+                JsonObj.accumulate("id", id.getText());
+                JsonObj.accumulate("pw", secretPassword);
+                JsonObj.accumulate("name", name.getText());
+                JsonObj.accumulate("phoneNumber", phoneNumber.getText());
+                JsonObj.accumulate("email", email.getText());
+                JsonObj.accumulate("nickname", nickname.getText());
 
                 RequestingServer req = new RequestingServer(this, JsonObj);              // 요청 객체 생성
 

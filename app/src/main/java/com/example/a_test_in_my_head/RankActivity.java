@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,18 +19,20 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
 
 public class RankActivity extends AppCompatActivity {
-    private final String showRankURL = "http://192.168.0.10:3000/showRank";
+    private final String showAllRankURL = "http://192.168.0.10:3000/showAllRank";
+    private final String showPartRankURL = "http://192.168.0.10:3000/showPartRank";
+    private final String showMyRankURL = "http://192.168.0.10:3000/showMyRank";
     private ListView list;
     private RankList adapter;
-    private String rankSql;
+    private String showRankMode;
     private User users[];
+    private User user;
     private JSONObject rabkJsonObj;
-    private String tag = "RankActivity";
     private int[] textViewIdArray;
+    private String tag = "RankActivity";
 
 
     @Override
@@ -39,22 +42,29 @@ public class RankActivity extends AppCompatActivity {
         textViewIdArray = new int[]{R.id.rank, R.id.nickname, R.id.nBackScore, R.id.dwmtScore, R.id.guessNumScore, R.id.totalScore};
         users = new User[11];
         users[0] = new User("닉네임", "NB", "DT", "GN", "Total");
-        rankSql = "SELECT * FROM score ORDER BY total DESC LIMIT 10;";      // 1~10 SQL
-        rabkJsonObj = new JSONObject();
 
+        Intent intent = getIntent();
+        user = (User) intent.getSerializableExtra("user");
+
+        adapter = new RankList(this);
+        list = (ListView) findViewById(R.id.listView);
+
+        showAllRank();
+    }
+
+    public void showAllRank(){
+        showRankMode = "";
         try {
-            rabkJsonObj.accumulate("rankSql", rankSql);
+            RequestingServer req = new RequestingServer(this, new JSONObject());
 
-            RequestingServer req = new RequestingServer(this, rabkJsonObj);
-
-            String response = req.execute(showRankURL).get();
+            String response = req.execute(showAllRankURL).get();
             Log.i(tag, "result: " + response);
 
             if (response == null)
                 return;
             String[] resResult = response.split(",");
 
-            Log.i(tag, "overlap: " + resResult[0]);
+            Log.i(tag, "resResult[0]: " + resResult[0]);
 
             switch (resResult[0]){
                 case "show rank":
@@ -78,6 +88,87 @@ public class RankActivity extends AppCompatActivity {
                 default:
                     break;
             }
+            list.setAdapter(adapter);
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void onClickShowAllRank(View v){
+        Log.i(tag, "onClickShowTotalRank");
+        showAllRank();
+    }
+
+    public void onClickShowPartRank(View v){
+        switch (v.getId()){
+            case R.id.nBackBtn:
+                showRankMode = "NB";
+                break;
+            case R.id.dwmtBtn:
+                showRankMode = "DT";
+                break;
+            case R.id.guessNumBtn:
+                showRankMode = "GN";
+                break;
+            default:
+                break;
+        }
+
+        rabkJsonObj = new JSONObject();
+        try {
+            rabkJsonObj.accumulate("partRank", showRankMode);
+
+            RequestingServer req = new RequestingServer(this, rabkJsonObj);
+
+            String response = req.execute(showPartRankURL).get();
+            Log.i(tag, "result: " + response);
+
+            if (response == null)
+                return;
+            String[] resResult = response.split(",");
+            Log.i(tag, "resResult[0]: " + resResult[0]);
+
+            int j = 1;
+            switch (showRankMode){
+                case "NB":
+                    for(int i=1; i<11; i++){
+                        users[i].setNickname(resResult[j]);
+                        users[i].setnBackScore(resResult[j+1]);
+                        Log.i(tag, users[i].getNickname());
+                        Log.i(tag, users[i].getnBackScore());
+                        j += 2;
+                    }
+                    Toast.makeText(this, "show NB rank", Toast.LENGTH_SHORT).show();
+                    break;
+                case "DT":
+                    for(int i=1; i<11; i++){
+                        users[i].setNickname(resResult[j]);
+                        users[i].setDwmtScore(resResult[j+1]);
+                        Log.i(tag, users[i].getNickname());
+                        Log.i(tag, users[i].getDwmtScore());
+                        j += 2;
+                    }
+                    Toast.makeText(this, "show DT rank", Toast.LENGTH_SHORT).show();
+                    break;
+                case "GN":
+                    for(int i=1; i<11; i++){
+                        users[i].setNickname(resResult[j]);
+                        users[i].setGuessNumberScore(resResult[j+1]);
+                        Log.i(tag, users[i].getNickname());
+                        Log.i(tag, users[i].getGuessNumberScore());
+                        j += 2;
+                    }
+                    Toast.makeText(this, "show GN rank", Toast.LENGTH_SHORT).show();
+                    break;
+                case "error":
+                    Toast.makeText(this, "error", Toast.LENGTH_SHORT).show();
+                    break;
+                default:
+                    break;
+            }
+            list.setAdapter(adapter);
         } catch (JSONException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
@@ -85,36 +176,49 @@ public class RankActivity extends AppCompatActivity {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        
-
-        adapter = new RankList(this);
-
-        list = (ListView) findViewById(R.id.listView);
-        list.setAdapter(adapter);
     }
 
-    public void onClickShowOneRank(View v){
-        switch (v.getId()){
-            case R.id.nBackBtn:
-//                rankSql = "SELECT * FROM score ORDER BY total DESC LIMIT 10;"
-                break;
-            case R.id.dwmtBtn:
-                break;
-            case R.id.guessNumBtn:
-                break;
-            default:
-                break;
+    /*
+    public void onClickShowMyRank(View v){
+        rabkJsonObj = new JSONObject();
+        showRankMode = "My";
+        try {
+            rabkJsonObj.accumulate("nickname", user.getNickname());
+            RequestingServer req = new RequestingServer(this, rabkJsonObj);
+
+            String response = req.execute(showMyRankURL).get();
+            Log.i(tag, "result: " + response);
+
+            if (response == null)
+                return;
+            String[] resResult = response.split(",");
+            Log.i(tag, "resResult[0]: " + resResult[0]);
+
+            int j = 1;
+            switch (resResult[0]){
+                case "show my rank success":
+                    for(int i=1; i<5; i++){
+                        users[i] = new User(resResult[j], resResult[j+1], resResult[j+2], resResult[j+3], resResult[j+4]);
+                        j += 5;
+                    }
+                    Toast.makeText(this, "MY rank", Toast.LENGTH_SHORT).show();
+                    list.setAdapter(adapter);
+                    break;
+                case "error":
+                    Toast.makeText(this, "error", Toast.LENGTH_SHORT).show();
+                    break;
+                default:
+                    break;
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
-
-    public void onClickTotalBtn(View v){
-        onRestart();
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-    }
+    */
 
     public class RankList extends ArrayAdapter<String> {
         private final Activity context;
@@ -129,8 +233,6 @@ public class RankActivity extends AppCompatActivity {
             LayoutInflater inflater = context.getLayoutInflater();
             View rowView = inflater.inflate(R.layout.listitem, null, true);
 
-            // 나중에 flag를 두고 All Rank, part Rank, My Rank 구분해서 작성
-
             // 코드를 간결하게 작성하고 싶어서 스트링 배열을 사용했습니다!
             String[] textAraay = new String[] {Integer.toString(position), users[position].getNickname(), users[position].getnBackScore(),
                                     users[position].getDwmtScore(), users[position].getGuessNumberScore(), users[position].getTotalScore()};
@@ -142,6 +244,29 @@ public class RankActivity extends AppCompatActivity {
             if (position==0)
                 ((TextView) rowView.findViewById(textViewIdArray[0])).setText("랭킹");
 
+            // 나중에 All Rank, part Rank 구분해서 작성
+            switch (showRankMode){
+                case "NB":
+                    for (int i=3; i<textViewIdArray.length; i++)
+                        rowView.findViewById(textViewIdArray[i]).setVisibility(View.GONE);
+                    break;
+                case "DT":
+                    for (int i=2; i<textViewIdArray.length; i++) {
+                        if (i==3) continue;
+                        rowView.findViewById(textViewIdArray[i]).setVisibility(View.GONE);
+                    }
+                    break;
+                case "GN":
+                    for (int i=2; i<textViewIdArray.length; i++) {
+                        if (i==4) continue;
+                        rowView.findViewById(textViewIdArray[i]).setVisibility(View.GONE);
+                    }
+                    break;
+                default:
+                    for (int i=2; i<textViewIdArray.length; i++)
+                        rowView.findViewById(textViewIdArray[i]).setVisibility(View.VISIBLE);
+                    break;
+            }
             return rowView;
         }
     }
