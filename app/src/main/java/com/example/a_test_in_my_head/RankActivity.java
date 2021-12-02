@@ -33,6 +33,7 @@ public class RankActivity extends AppCompatActivity {
     private JSONObject rabkJsonObj;
     private int[] textViewIdArray;
     private String tag = "RankActivity";
+    private String[] myRank;
 
 
     @Override
@@ -178,10 +179,11 @@ public class RankActivity extends AppCompatActivity {
         }
     }
 
-    /*
+
     public void onClickShowMyRank(View v){
         rabkJsonObj = new JSONObject();
         showRankMode = "My";
+        myRank = new String[4];
         try {
             rabkJsonObj.accumulate("nickname", user.getNickname());
             RequestingServer req = new RequestingServer(this, rabkJsonObj);
@@ -194,13 +196,27 @@ public class RankActivity extends AppCompatActivity {
             String[] resResult = response.split(",");
             Log.i(tag, "resResult[0]: " + resResult[0]);
 
-            int j = 1;
             switch (resResult[0]){
-                case "show my rank success":
-                    for(int i=1; i<5; i++){
-                        users[i] = new User(resResult[j], resResult[j+1], resResult[j+2], resResult[j+3], resResult[j+4]);
-                        j += 5;
+                case "show my rank":
+                    users[1] = new User(resResult[1], resResult[2], resResult[3], resResult[4], resResult[5]);
+                    for (int i=2; i<5; i++){
+                        switch (i) {
+                            case 2:
+                                users[i] = new User(resResult[1], resResult[2], "-", "-", "-");
+                                break;
+                            case 3:
+                                users[i] = new User(resResult[1], "-", resResult[3], "-", "-");
+                                break;
+                            case 4:
+                                users[i] = new User(resResult[1], "-", "-", resResult[4], "-");
+                                break;
+                        }
                     }
+                    int j = 0;
+                    for(int i=6; i<10; i++)
+                        myRank[j++] = resResult[i];
+
+                    Log.i(tag, "myRank[0]: "+myRank[0] + "myRank[3]: "+myRank[3]);
                     Toast.makeText(this, "MY rank", Toast.LENGTH_SHORT).show();
                     list.setAdapter(adapter);
                     break;
@@ -218,7 +234,7 @@ public class RankActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-    */
+
 
     public class RankList extends ArrayAdapter<String> {
         private final Activity context;
@@ -232,9 +248,10 @@ public class RankActivity extends AppCompatActivity {
         public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
             LayoutInflater inflater = context.getLayoutInflater();
             View rowView = inflater.inflate(R.layout.listitem, null, true);
+            String[] textAraay;
 
             // 코드를 간결하게 작성하고 싶어서 스트링 배열을 사용했습니다!
-            String[] textAraay = new String[] {Integer.toString(position), users[position].getNickname(), users[position].getnBackScore(),
+            textAraay = new String[] {Integer.toString(position), users[position].getNickname(), users[position].getnBackScore(),
                                     users[position].getDwmtScore(), users[position].getGuessNumberScore(), users[position].getTotalScore()};
 
             // textViewIdArray = new int[]{R.id.rank, R.id.nickname, R.id.nBackScore, R.id.dwmtScore, R.id.guessNumScore, R.id.totalScore};
@@ -244,7 +261,6 @@ public class RankActivity extends AppCompatActivity {
             if (position==0)
                 ((TextView) rowView.findViewById(textViewIdArray[0])).setText("랭킹");
 
-            // 나중에 All Rank, part Rank 구분해서 작성
             switch (showRankMode){
                 case "NB":
                     for (int i=3; i<textViewIdArray.length; i++)
@@ -261,6 +277,15 @@ public class RankActivity extends AppCompatActivity {
                         if (i==4) continue;
                         rowView.findViewById(textViewIdArray[i]).setVisibility(View.GONE);
                     }
+                    break;
+                case "My":
+                    if (position > 4){
+                        for (int i=0; i<textViewIdArray.length; i++)
+                            rowView.findViewById(textViewIdArray[i]).setVisibility(View.GONE);
+                        break;
+                    }
+                    else if (position != 0)
+                        ((TextView) rowView.findViewById(textViewIdArray[0])).setText(myRank[position-1]);
                     break;
                 default:
                     for (int i=2; i<textViewIdArray.length; i++)
