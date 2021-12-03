@@ -3,9 +3,17 @@ package com.example.a_test_in_my_head;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.RelativeSizeSpan;
+import android.text.style.StyleSpan;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class NBackHelp extends AppCompatActivity {
@@ -23,6 +31,18 @@ public class NBackHelp extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        TextView textView = findViewById(R.id.NBtext);
+        String context = textView.getText().toString();
+        Spannable spannableString = new SpannableString(context);
+        String word = "N-Back Test란?";
+        int start = context.indexOf(word);
+        int end = start + word.length();
+        spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#FF6702")), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(new StyleSpan(Typeface.BOLD), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(new RelativeSizeSpan(2f), start, end, SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        // 4
+        textView.setText(spannableString);
     }
     @Override
     public void onBackPressed() {

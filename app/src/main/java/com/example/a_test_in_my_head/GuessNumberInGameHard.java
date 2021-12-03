@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -36,11 +37,15 @@ public class GuessNumberInGameHard extends AppCompatActivity {
     boolean flag = true;
     private long backKeyPressedTime = 0;
     boolean answer;
+
+    GuessNumberInGame hardScore;
+
     @Override
     public void onBackPressed() {
         if(System.currentTimeMillis()>backKeyPressedTime+2000){
             backKeyPressedTime=System.currentTimeMillis();
             Toast.makeText(this,"뒤로가기 버튼을 한번 더 누르시면 종료됩니다!",Toast.LENGTH_SHORT).show();
+            GuessNumberInGame.score = 0;
             return;
         }
         if(System.currentTimeMillis()<=backKeyPressedTime+2000){
@@ -73,6 +78,10 @@ public class GuessNumberInGameHard extends AppCompatActivity {
             btnList[10].setText(buttonList.get(10)); btnList[11].setText(buttonList.get(11)); btnList[12].setText(buttonList.get(12)); btnList[13].setText(buttonList.get(13)); btnList[14].setText(buttonList.get(14)); btnList[15].setText(buttonList.get(15));
             // 왜 != 가 안되는지..?
         }
+        // 랜덤 값 가져와서 result에 지정하기.
+        int random = (int) (Math.random() * 20) + 1; // 1 ~ 20까지의 랜덤 값 지정.
+        important = (TextView)findViewById(R.id.important);
+        important.setText(String.valueOf(random));
 
         // 타이머
         timer = (TextView) findViewById(R.id.timer);
@@ -81,7 +90,7 @@ public class GuessNumberInGameHard extends AppCompatActivity {
             @Override
             public void run() {
                 // 5초 카운트 다운
-                for(i = 5; i >= 0; i--){
+                for(i = 3; i >= 0; i--){
                     try {
                         Thread.sleep(1000);
                     } catch (InterruptedException e) {
@@ -177,10 +186,6 @@ public class GuessNumberInGameHard extends AppCompatActivity {
                                         });
                                     }
                                 }
-                                // 랜덤 값 가져와서 result에 지정하기.
-                                int random = (int) (Math.random() * 20) + 1; // 1 ~ 20까지의 랜덤 값 지정.
-                                important = (TextView)findViewById(R.id.important);
-                                important.setText(String.valueOf(random));
 
                                 submit = (Button) findViewById(R.id.submit);
                                 // 제출을 클릭했을 때 문제랑 결과같 같으면 true, 다르면 false 출력 (임시로 Toast 출력)
@@ -196,8 +201,14 @@ public class GuessNumberInGameHard extends AppCompatActivity {
                                             resultText.setTextColor(Color.parseColor("#9E195EE8"));
                                             important.setTextColor(Color.parseColor("#9E195EE8"));
                                             startActivity(intent1);
-
+                                            hardScore.score += 5;
                                         } else {
+                                            hardScore.score -= 5; // 실패시 점수 3점 감점.
+                                            // score가 0보다 작으면 스코어 0점으로 유지시키기. (-로 안가게 하기)
+                                            if(hardScore.score < 0){
+                                                hardScore.score = 0;
+                                            }
+                                            Log.i("SCORE", "실패! 점수는 : " + hardScore.score);
                                             startActivity(intent2);
 
                                         }

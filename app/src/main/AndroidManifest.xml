@@ -12,6 +12,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.A_test_in_my_head">
         <activity
+            android:name=".DwmtGameActivity"
+            android:exported="true" />
+        <activity
+            android:name=".DwmtSettingActivity"
+            android:exported="true" />
+        <activity
+            android:name=".DwmtMainActivity"
+            android:exported="true" />
+        <activity
             android:name=".MenuActivity"
             android:exported="true" />
         <activity
@@ -50,15 +59,15 @@
         <activity
             android:name=".Wrong"
             android:exported="true"
-            android:theme="@style/Theme.AppCompat.Dialog" />
+            android:theme="@style/Theme.MyDialog" />
         <activity
             android:name=".Success"
             android:exported="true"
-            android:theme="@style/Theme.AppCompat.Dialog" />
+            android:theme="@style/Theme.MyDialog" />
         <activity
             android:name=".Timeout"
             android:exported="true"
-            android:theme="@style/Theme.AppCompat.Dialog" />
+            android:theme="@style/Theme.MyDialog" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

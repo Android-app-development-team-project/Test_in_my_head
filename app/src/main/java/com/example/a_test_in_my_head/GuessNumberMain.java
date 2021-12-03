@@ -25,31 +25,21 @@ public class GuessNumberMain extends AppCompatActivity {
     Button easyButton, hardButton;
     Intent easyIntent, hardIntent;
     private long backKeyPressedTime = 0;
+    TextView sumScore;
+    GuessNumberInGame easyMode;
 
-/*    @Override
-    public void onBackPressed() {
-        if(System.currentTimeMillis()>backKeyPressedTime+2000){
-            backKeyPressedTime=System.currentTimeMillis();
-            Toast.makeText(this,"뒤로가기 버튼을 한번 더 누르시면 return home!",Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if(System.currentTimeMillis()<=backKeyPressedTime+2000){
-            finishAffinity();
-            System.runFinalization();
-            System.exit(0);
-        }
-    }*/
     @Override
     public void onBackPressed() {
         if(System.currentTimeMillis()>backKeyPressedTime+2000){
             backKeyPressedTime=System.currentTimeMillis();
             Toast.makeText(this,"뒤로가기 버튼을 한번 더 누르시면 return home!",Toast.LENGTH_SHORT).show();
+            GuessNumberInGame.score = 0;
             return;
         }
         if(System.currentTimeMillis()<=backKeyPressedTime+2000){
-//            Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-//            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//            startActivity(intent);
+            Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
             finish();
         }
 
@@ -58,8 +48,12 @@ public class GuessNumberMain extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guess_number_main);
+        Intent intent = getIntent();
+
         easyIntent = new Intent(this, GuessNumberInGame.class);
         hardIntent = new Intent(this, GuessNumberInGameHard.class);
+        easyIntent.putExtra("user", (User) intent.getSerializableExtra("user"));
+        easyIntent.putExtra("user", (User) intent.getSerializableExtra("user"));
         easyButton = (Button)findViewById(R.id.easyLevel);
         hardButton = (Button)findViewById(R.id.hardLevel);
         easyButton.setOnClickListener(new View.OnClickListener() {
@@ -76,6 +70,9 @@ public class GuessNumberMain extends AppCompatActivity {
                 startActivity(hardIntent);
             }
         });
+        easyMode = new GuessNumberInGame();
+        sumScore = (TextView) findViewById(R.id.textView7);
+        sumScore.setText("누적된 값은 : " + String.valueOf(GuessNumberInGame.score));
 
     }
 

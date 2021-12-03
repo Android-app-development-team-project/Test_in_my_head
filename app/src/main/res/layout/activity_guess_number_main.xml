@@ -14,21 +14,41 @@
         android:text="숫자 찾기 게임! "
         android:layout_marginTop="100sp"
         android:layout_marginLeft="50sp"
-        android:textColor="#7C7070"
+        android:textColor="@color/thema_Color_5"
+        android:textStyle="bold"
         android:layout_marginBottom="300sp"
         android:textSize="45sp" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="0"
+        android:textSize="25sp" />
 
     <Button
         android:id="@+id/easyLevel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="#F9CF93"
+        android:backgroundTint="@color/thema_Color_4"
+        android:textColor="@color/thema_Color_5"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:strokeColor="#635A5A"
+        app:strokeWidth="2dp"
         android:text="EASY" />
 
     <Button
         android:id="@+id/hardLevel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="#F9CF93"
+        android:backgroundTint="@color/thema_Color_4"
+        android:textColor="@color/thema_Color_5"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:strokeColor="#635A5A"
+        app:strokeWidth="2dp"
         android:text="HARD" />
+
 </LinearLayout>

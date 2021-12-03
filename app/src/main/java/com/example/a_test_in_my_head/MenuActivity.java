@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 public class MenuActivity extends AppCompatActivity {
 
-    private long backKeyPressedTime=0;
+    private long backKeyPressedTime = 0;
     private User user;
     private String tag = "MenuActivity";
 
@@ -25,7 +25,7 @@ public class MenuActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Log.i(tag, "mainddd");
         Intent intent = getIntent();
         user = (User) intent.getSerializableExtra("user");
         consolUser();
@@ -126,7 +126,7 @@ public class MenuActivity extends AppCompatActivity {
         startActivity(intent3);
     }
     public void onClickNBackHelp(View view){
-        Intent intent3 = new Intent(MenuActivity.this, DWDMHelp.class);
+        Intent intent3 = new Intent(MenuActivity.this, NBackHelp.class);
         startActivity(intent3);
     }
     public void onClickRankBtn(View view){
@@ -134,6 +134,12 @@ public class MenuActivity extends AppCompatActivity {
         rankIntent.putExtra("user", user);
         startActivity(rankIntent);
     }
+    public void onClickDwmtBtn(View v){
+        Intent dwmtIntent = new Intent(MenuActivity.this, DwmtMainActivity.class);
+        dwmtIntent.putExtra("user", user);
+        startActivity(dwmtIntent);
+    }
+
     public void consolUser(){
         Log.i(tag, user.getNickname());
         Log.i(tag, user.getnBackScore() + "");
@@ -145,6 +151,5 @@ public class MenuActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         user = (User) data.getSerializableExtra("user");
-
     }
 }

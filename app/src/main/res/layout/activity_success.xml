@@ -2,16 +2,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="#eeeeee"
-    android:orientation="vertical"
-    android:layout_width="300dp"
+    android:layout_width="350dp"
     android:layout_height="wrap_content"
+    android:background="#eeeeee"
+    android:backgroundTint="#FAEEE0"
+    android:orientation="vertical"
     tools:context=".Timeout">
 
+
+
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/timeoutText"
@@ -19,62 +22,91 @@
             android:layout_height="53sp"
             android:background="#E4C2BF"
 
+            android:backgroundTint="#F9CF93"
             android:gravity="center"
             android:text="문제해결!"
-            android:textColor="#C12929"
+            android:textStyle="bold"
+            android:textColor="#656060"
             android:textSize="20sp" />
     </LinearLayout>
 
     <LinearLayout
-        android:padding="24dp"
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:backgroundTint="#FAEEE0"
+        android:orientation="vertical"
+        android:padding="24dp">
+
         <TextView
             android:id="@+id/secondText"
-            android:textSize="15sp"
-            android:textColor="#000"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="3dp"
+            android:gravity="center"
             android:text="문제를 풀었네요"
-            android:gravity="center"
-            android:layout_marginBottom="3dp"
 
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:textColor="#000"
+            android:textSize="15sp" />
         <TextView
-            android:id="@+id/second2Text"
+            android:id="@+id/sumScore"
             android:textSize="15sp"
             android:textColor="#000"
             android:gravity="center"
             android:layout_marginBottom="3dp"
-
+            android:text="누적된 스코어 값 : 0"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
+        <!--        <TextView
+                    android:id="@+id/second2Text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="3dp"
+                    android:gravity="center"
+
+                    android:textColor="#000"
+                    android:textSize="15sp" />-->
 
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp" />
 
 
     <LinearLayout
-        android:orientation="horizontal"
-        android:gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:backgroundTint="#FAEEE0"
+        android:gravity="center"
+        android:orientation="horizontal">
+
         <Button
             android:id="@+id/RetryBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#F9CF93"
+            android:onClick="Retry"
             android:text="다시하기"
             android:textSize="20sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="Retry" />
+            android:textStyle="bold"
+            android:textColor="#656060"
+            app:strokeColor="#635A5A"
+            app:strokeWidth="2dp"
+            android:visibility="visible" />
+
         <Button
             android:id="@+id/BackBtn"
-            android:text="메뉴가기"
-            android:textSize="20sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="Back" />
+            android:backgroundTint="#F9CF93"
+            android:onClick="Back"
+            android:text="메뉴가기"
+            android:textSize="20sp"
+            android:textColor="#656060"
+            android:textStyle="bold"
+            app:strokeColor="#635A5A"
+            app:strokeWidth="2dp" />
     </LinearLayout>
 
 </LinearLayout>

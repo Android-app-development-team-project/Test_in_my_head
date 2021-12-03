@@ -3,9 +3,12 @@ package com.example.a_test_in_my_head;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -37,6 +40,9 @@ public class GuessNumberInGame extends AppCompatActivity {
     private boolean flag = true;
     int successcount =0;
 
+    static int score; // 점수
+    TextView textViewScore; // 누적된 점수 입력되는 부분.
+
     public void StopThread(){
         this.flag=true;
     }
@@ -48,6 +54,7 @@ public class GuessNumberInGame extends AppCompatActivity {
         if(System.currentTimeMillis()>backKeyPressedTime+2000){
             backKeyPressedTime=System.currentTimeMillis();
             Toast.makeText(this,"뒤로가기 버튼을 한번 더 누르시면 종료됩니다!",Toast.LENGTH_SHORT).show();
+            GuessNumberInGame.score = 0;
             return;
         }
         if(System.currentTimeMillis()<=backKeyPressedTime+2000){
@@ -56,30 +63,14 @@ public class GuessNumberInGame extends AppCompatActivity {
             System.exit(0);
         }
     }
-    /*
-    @Override
-    public void onBackPressed() {
-        if(System.currentTimeMillis()>backKeyPressedTime+2000){
-            backKeyPressedTime=System.currentTimeMillis();
-            Toast.makeText(this,"뒤로가기 버튼을 한번 더 누르시면 return home!",Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if(System.currentTimeMillis()<=backKeyPressedTime+2000){
-            Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-            finish();
-
-        }
-
-    }
-*/
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guess_number_in_game);
+
+        //textViewScore = (TextView)findViewById(R.id.score);
+
         // 각 버튼마다 랜덤으로 출력되도록 하기 (안겹치게)    코드 개선하기..
         buttonList.add("1");
         buttonList.add("2");
@@ -234,30 +225,6 @@ public class GuessNumberInGame extends AppCompatActivity {
                 });
             }
         }
-
-        submit = (Button) findViewById(R.id.submit);
-        // 제출을 클릭했을 때 문제랑 결과같 같으면 true, 다르면 false 출력 (임시로 Toast 출력)
-        submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String resultInt = resultText.getText().toString();
-                String importantInt = important.getText().toString();
-                intent1 = new Intent(GuessNumberInGame.this, Success.class);
-                intent2 = new Intent(GuessNumberInGame.this, Wrong.class);
-                if (Integer.parseInt(resultInt) == Integer.parseInt(importantInt)) {
-                    // 제출 버튼을 눌렀을 때
-                    resultText.setTextColor(Color.parseColor("#9E195EE8"));
-                    important.setTextColor(Color.parseColor("#9E195EE8"));
-                    successcount +=1;
-                    startActivity(intent1);
-
-                } else {
-                    startActivity(intent2);
-
-                }
-                flag = false;
-            }
-        });
         // 타이머
         timer = (TextView) findViewById(R.id.timer);
         value = 0;
@@ -281,7 +248,12 @@ public class GuessNumberInGame extends AppCompatActivity {
                                     if (flag == true) {
                                         Intent intent = new Intent(GuessNumberInGame.this, Timeout.class);
 
-
+                                        score -= 3; // 실패시 점수 3점 감점.
+                                        // score가 0보다 작으면 스코어 0점으로 유지시키기. (-로 안가게 하기)
+//                                        if(score < 0){
+//                                            score = 0;
+//                                        }
+                                        Log.i("SCORE", "실패! 점수는 : " + score);
                                         startActivity(intent);
                                     }
                                 }
@@ -291,64 +263,32 @@ public class GuessNumberInGame extends AppCompatActivity {
                 }
             }
         }).start();
-    }
 
-/*    public void onClickAnswer(View view){
-        String resultInt = resultText.getText().toString();
-        String importantInt = important.getText().toString();
-        //Toast.makeText(getApplicationContext(), "실패입니다..", Toast.LENGTH_SHORT).show();
-        intent1 = new Intent(GuessNumberInGame.this,Success.class);
-        startActivity(intent1);
-        finish();
-        Intent intent = new Intent();
-        intent.setClass(GuessNumberInGame.this, Success.class);
-        startActivity(intent);
-        if(Integer.parseInt(resultInt) == Integer.parseInt(importantInt)){
 
-            SuccessAnswer();
-        }
-        else{
 
-            WrongAnswer();
-        }
-
-    }
-    public void SuccessAnswer(){
-        intent1 = new Intent(GuessNumberInGame.this,Success.class);
-        startActivity(intent1);
-    }
-    public void WrongAnswer(){
-        intent2 = new Intent(GuessNumberInGame.this,Wrong.class);
-        startActivity(intent2);
-    }*/
-/*
-    public void CountDown(){
-        new Thread(new Runnable() {
+        submit = (Button) findViewById(R.id.submit);
+        // 제출을 클릭했을 때 문제랑 결과같 같으면 true, 다르면 false 출력 (임시로 Toast 출력)
+        submit.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void run() {
-                // 5초 카운트 다운
-                for(i = 5; i >= 0; i--){
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+            public void onClick(View view) {
+                String resultInt = resultText.getText().toString();
+                String importantInt = important.getText().toString();
+                intent1 = new Intent(GuessNumberInGame.this, Success.class);
+                intent2 = new Intent(GuessNumberInGame.this, Wrong.class);
+                if (Integer.parseInt(resultInt) == Integer.parseInt(importantInt)) {
+                    startActivity(intent1);
+                    score += 3;
+                } else {
+                    score -= 3; // 실패시 점수 3점 감점.
+                    // score가 0보다 작으면 스코어 0점으로 유지시키기. (-로 안가게 하기)
+                    if(score < 0){
+                        score = 0;
                     }
-                    value = i;
-                    GuessNumberInGame.this.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            timer.setText(String.valueOf(value));
-                            // 5초가 지나면 버튼 입력하는 배경 색 숫자가 안 보이도록 변경시켜주기.
-                            if(value == 0){
-                                Intent intent = new Intent(GuessNumberInGame.this,Timeout.class);
-
-
-                                startActivity(intent);
-                            }
-                        }
-                    });
+                    Log.i("SCORE", "실패! 점수는 : " + score);
+                    startActivity(intent2);
                 }
+                flag = false;
             }
-        }).start();
-    }*/
+        });
+    }
 }

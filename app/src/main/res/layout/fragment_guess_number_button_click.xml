@@ -51,30 +51,30 @@
 
             <Button
                 android:id="@+id/num9"
-                android:layout_marginRight="5sp"
                 android:layout_width="65sp"
                 android:layout_height="65sp"
+                android:layout_marginRight="5sp"
                 android:text="9" />
 
             <Button
                 android:id="@+id/num10"
-                android:layout_marginRight="5sp"
                 android:layout_width="65sp"
                 android:layout_height="65sp"
+                android:layout_marginRight="5sp"
                 android:text="10" />
 
             <Button
                 android:id="@+id/num11"
-                android:layout_marginRight="5sp"
                 android:layout_width="65sp"
                 android:layout_height="65sp"
+                android:layout_marginRight="5sp"
                 android:text="11" />
 
             <Button
                 android:id="@+id/num12"
-                android:layout_marginRight="5sp"
                 android:layout_width="65sp"
                 android:layout_height="65sp"
+                android:layout_marginRight="5sp"
                 android:text="12" />
         </LinearLayout>
 
