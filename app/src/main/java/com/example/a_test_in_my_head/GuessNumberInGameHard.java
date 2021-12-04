@@ -244,8 +244,6 @@ public class GuessNumberInGameHard extends AppCompatActivity {
                                 if (value == 0) {
                                     if (flag == true) {
                                         Intent intent = new Intent(GuessNumberInGameHard.this, Timeout.class);
-
-
                                         startActivity(intent);
                                     }
                                 }

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FAEEE0"
     tools:context=".DwmtGameActivity">
 
     <TextView
@@ -38,32 +39,62 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
-            android:id="@+id/button5"
+            android:id="@+id/dwmtStartBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="gameStart"
-            android:text="START" />
+            android:backgroundTint="#F9CF93"
+            android:textColor="#656060"
+            app:strokeColor="#635A5A"
+            app:strokeWidth="1dp"
+            android:text="START"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/answer1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:backgroundTint="#F9CF93"
             android:onClick="clickAnswer"
             android:text="보기 1"
-            android:textSize="16sp"
-            android:visibility="gone" />
+            android:textColor="#656060"
+            android:visibility="gone"
+            app:strokeColor="#635A5A"
+            app:strokeWidth="1dp"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/answer2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:backgroundTint="#F9CF93"
             android:onClick="clickAnswer"
             android:text="보기 2"
+            android:textColor="#656060"
             android:visibility="gone"
-            tools:textSize="16sp" />
+            app:strokeColor="#635A5A"
+            app:strokeWidth="1dp"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/metronomeAnswer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="메트로놈 수를 적어주세요"
+            android:inputType="textPersonName"
+            android:textColor="#656060"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:strokeColor="#635A5A"
+            app:strokeWidth="1dp" />
 
     </LinearLayout>
 
@@ -81,20 +112,46 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:backgroundTint="#F9CF93"
             android:onClick="clickAnswer"
             android:text="보기 3"
-            android:textSize="16sp"
-            android:visibility="gone" />
+            android:textColor="#656060"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:strokeColor="#635A5A"
+            app:strokeWidth="1dp" />
 
         <Button
             android:id="@+id/answer4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:backgroundTint="#F9CF93"
             android:onClick="clickAnswer"
             android:text="보기 4"
-            android:textSize="16sp"
-            android:visibility="gone" />
+            android:textColor="#656060"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:strokeColor="#635A5A"
+            app:strokeWidth="1dp" />
+
+        <Button
+            android:id="@+id/metronomeBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="#F9CF93"
+            android:onClick="onClickMetronomeBtn"
+            android:text="제출하기"
+            android:textColor="#656060"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:strokeColor="#635A5A"
+            app:strokeWidth="1dp" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

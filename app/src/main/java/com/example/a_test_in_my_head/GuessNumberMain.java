@@ -7,8 +7,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -27,6 +30,7 @@ public class GuessNumberMain extends AppCompatActivity {
     private long backKeyPressedTime = 0;
     TextView sumScore;
     GuessNumberInGame easyMode;
+    private String tag = "GuessNumberMain";
 
     @Override
     public void onBackPressed() {
@@ -48,12 +52,9 @@ public class GuessNumberMain extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guess_number_main);
-        Intent intent = getIntent();
 
         easyIntent = new Intent(this, GuessNumberInGame.class);
         hardIntent = new Intent(this, GuessNumberInGameHard.class);
-        easyIntent.putExtra("user", (User) intent.getSerializableExtra("user"));
-        easyIntent.putExtra("user", (User) intent.getSerializableExtra("user"));
         easyButton = (Button)findViewById(R.id.easyLevel);
         hardButton = (Button)findViewById(R.id.hardLevel);
         easyButton.setOnClickListener(new View.OnClickListener() {

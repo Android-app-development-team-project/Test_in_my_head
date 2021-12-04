@@ -5,7 +5,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,7 +31,6 @@ public class RankActivity extends AppCompatActivity {
     private RankList adapter;
     private String showRankMode;
     private User users[];
-    private User user;
     private JSONObject rabkJsonObj;
     private int[] textViewIdArray;
     private String tag = "RankActivity";
@@ -43,9 +44,6 @@ public class RankActivity extends AppCompatActivity {
         textViewIdArray = new int[]{R.id.rank, R.id.nickname, R.id.nBackScore, R.id.dwmtScore, R.id.guessNumScore, R.id.totalScore};
         users = new User[11];
         users[0] = new User("닉네임", "NB", "DT", "GN", "Total");
-
-        Intent intent = getIntent();
-        user = (User) intent.getSerializableExtra("user");
 
         adapter = new RankList(this);
         list = (ListView) findViewById(R.id.listView);
@@ -81,7 +79,7 @@ public class RankActivity extends AppCompatActivity {
                         j += 5;
                     }
 
-                    Toast.makeText(this, "show rank", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Show All Rank", Toast.LENGTH_SHORT).show();
                     break;
                 case "error":
                     Toast.makeText(this, "error", Toast.LENGTH_SHORT).show();
@@ -141,7 +139,7 @@ public class RankActivity extends AppCompatActivity {
                         Log.i(tag, users[i].getnBackScore());
                         j += 2;
                     }
-                    Toast.makeText(this, "show NB rank", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Show NB Rank", Toast.LENGTH_SHORT).show();
                     break;
                 case "DT":
                     for(int i=1; i<11; i++){
@@ -151,7 +149,7 @@ public class RankActivity extends AppCompatActivity {
                         Log.i(tag, users[i].getDwmtScore());
                         j += 2;
                     }
-                    Toast.makeText(this, "show DT rank", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Show DT Rank", Toast.LENGTH_SHORT).show();
                     break;
                 case "GN":
                     for(int i=1; i<11; i++){
@@ -161,7 +159,7 @@ public class RankActivity extends AppCompatActivity {
                         Log.i(tag, users[i].getGuessNumberScore());
                         j += 2;
                     }
-                    Toast.makeText(this, "show GN rank", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Show GN Rank", Toast.LENGTH_SHORT).show();
                     break;
                 case "error":
                     Toast.makeText(this, "error", Toast.LENGTH_SHORT).show();
@@ -181,11 +179,19 @@ public class RankActivity extends AppCompatActivity {
 
 
     public void onClickShowMyRank(View v){
+        SharedPreferences spref = getSharedPreferences("user.pref", Context.MODE_PRIVATE);
+
+        // public user 접근 제한!!
+        if (spref.getString("nickname", "public").equals("public")){
+            Toast.makeText(this, "public 유저는 접근할 수 없습니다!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         rabkJsonObj = new JSONObject();
         showRankMode = "My";
         myRank = new String[4];
         try {
-            rabkJsonObj.accumulate("nickname", user.getNickname());
+            rabkJsonObj.accumulate("nickname", spref.getString("nickname", "public"));
             RequestingServer req = new RequestingServer(this, rabkJsonObj);
 
             String response = req.execute(showMyRankURL).get();

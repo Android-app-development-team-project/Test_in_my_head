@@ -22,8 +22,12 @@ public class DwmtMetronome {
     }
 
     public void setRandomCnt(){
-        cnt = random.nextInt(20);
-        Log.i("cnt", "random cnt: " + cnt);
+//        cnt = random.nextInt(5);
+        cnt = 10;
+        if (cnt < 5)
+            setRandomCnt();
+        else
+            Log.i("cnt", "random cnt: " + cnt);
     }
 
     public void play(){
@@ -32,6 +36,5 @@ public class DwmtMetronome {
     }
 
     public int getCnt(){ return cnt; }
-//    public void resetCnt(){ return cnt; }
 }
 

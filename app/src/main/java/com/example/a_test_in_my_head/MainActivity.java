@@ -28,11 +28,15 @@ public class MainActivity extends AppCompatActivity {
     private final String loginURL = "http://192.168.0.10:3000/login";
     private EditText id;
     private EditText password;
+    private SharedPreferences spref;
+    private SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        spref = getSharedPreferences("user.pref",Context.MODE_PRIVATE );
+        editor = spref.edit();
 
         id = findViewById(R.id.id);
         password = findViewById(R.id.password);
@@ -64,8 +68,15 @@ public class MainActivity extends AppCompatActivity {
 
             switch (resResult[0]){
                 case "Login success":
+                    // Share Preferences를 통한 user 정보 저장
+                    editor.putString("nickname", resResult[1]);
+                    editor.putString("nBackScore", resResult[2] );
+                    editor.putString("dwmtScore", resResult[3] );
+                    editor.putString("guessNumberScore", resResult[4] );
+                    editor.putString("totalScore", resResult[5] );
+                    editor.commit();
+
                     Intent menuIntent = new Intent(MainActivity.this, MenuActivity.class);
-                    menuIntent.putExtra("user", new User(resResult[1], resResult[2], resResult[3],resResult[4],resResult[5]));
                     startActivity(menuIntent);
                     break;
                 case "Login id fail":
@@ -92,8 +103,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void finishBtn(View view){
+        // Share Preferences를 통한 user 정보 저장
+        editor.putString("nickname", "public");
+        editor.putString("nBackScore", "0");
+        editor.putString("dwmtScore", "0");
+        editor.putString("guessNumberScore", "0");
+        editor.putString("totalScore", "0");
+        editor.commit();
+
         Intent menuIntent = new Intent(MainActivity.this, MenuActivity.class);
-        menuIntent.putExtra("user", new User("public", "0","0","0","0"));
         startActivity(menuIntent);
     }
 }

@@ -1,7 +1,6 @@
 package com.example.a_test_in_my_head;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +13,7 @@ public class NBackPracticeGameSetting extends AppCompatActivity {
     private int examLength;
     private int delayTime;
     private boolean parallel;
+    private String tag = "NBackPracticeGameSetting";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

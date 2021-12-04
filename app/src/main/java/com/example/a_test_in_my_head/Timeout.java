@@ -29,14 +29,10 @@ public class Timeout extends AppCompatActivity {
         easyMode = new GuessNumberInGame();
         minusScore = (TextView) findViewById(R.id.minusScore);
         minusScore.setText("누적된 값은 : " + String.valueOf(GuessNumberInGame.score));
-
-
-
-
     }
 
     public void Back(View v){
-        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+        Intent intent = new Intent(getApplicationContext(),MenuActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         Toast.makeText(getApplicationContext(), "최종 점수는 : " + GuessNumberInGame.score + "입니다!", Toast.LENGTH_SHORT).show();
         GuessNumberInGame.score = 0;

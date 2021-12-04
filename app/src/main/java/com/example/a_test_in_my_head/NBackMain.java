@@ -10,7 +10,6 @@ import android.widget.Toast;
 
 public class NBackMain extends AppCompatActivity {
     private long backKeyPressedTime = 0;
-    private User user;
 
     @Override
     public void onBackPressed() {
@@ -27,13 +26,10 @@ public class NBackMain extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nback_main);
-        Intent intent = getIntent();
-        user = (User) intent.getSerializableExtra("user");
     }
 
     public void onClickLevelTest(View v){
         Intent intent = new Intent(this, NBackGame.class);
-        intent.putExtra("user", user);
         startActivity(intent);
     }
 

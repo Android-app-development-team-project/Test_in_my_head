@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FAEEE0"
     tools:context=".DwmtMainActivity">
 
     <TextView
@@ -12,6 +13,7 @@
         android:layout_height="wrap_content"
         android:text="DWMT"
         android:textSize="50sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -38,6 +40,10 @@
         android:text="DWMT 시작"
         android:textSize="32sp"
         android:visibility="visible"
+        android:backgroundTint="#F9CF93"
+        android:textColor="#656060"
+        app:strokeColor="#635A5A"
+        app:strokeWidth="1dp"
         app:layout_constraintBottom_toTopOf="@+id/settingdwmt"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/introduce"
@@ -52,6 +58,10 @@
         android:text="테스트 설정"
         android:textSize="32sp"
         android:visibility="visible"
+        android:backgroundTint="#F9CF93"
+        android:textColor="#656060"
+        app:strokeColor="#635A5A"
+        app:strokeWidth="1dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/startdwmt" />
 

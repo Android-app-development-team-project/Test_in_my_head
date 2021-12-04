@@ -43,8 +43,15 @@ public class User implements Serializable {
     public String getTotalScore() { return totalScore; }
     public void setTotalScore(String totalScore) { this.totalScore = totalScore; }
 
-    public void setScore(Activity activity, String game, int nBackScore){
-        int plusScore = nBackScore - Integer.parseInt(this.nBackScore);
+    public void setScore(Activity activity, String game, int score){
+        int plusScore;
+
+        if (game.equals("N_Back"))
+            plusScore = score - Integer.parseInt(this.nBackScore);
+        else if (game.equals("DWMT"))
+            plusScore = score - Integer.parseInt(this.dwmtScore);
+        else
+            plusScore = score - Integer.parseInt(this.guessNumberScore);
 
         try {
             Log.i(tag, "setScore...  nickname: " + nickname + ", game: " + game + ", plusScore: " + plusScore);

@@ -35,7 +35,7 @@ public class Wrong extends AppCompatActivity {
     }
 
     public void Back(View v){
-        Intent intent = new Intent(Wrong.this,MainActivity.class);
+        Intent intent = new Intent(Wrong.this,MenuActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra("user", (User) (getIntent().getSerializableExtra("user")));
         Toast.makeText(getApplicationContext(), "최종 점수는 : " + GuessNumberInGame.score + "입니다!", Toast.LENGTH_SHORT).show();

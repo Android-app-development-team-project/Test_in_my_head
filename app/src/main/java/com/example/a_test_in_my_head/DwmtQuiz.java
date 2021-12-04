@@ -4,10 +4,10 @@ public class DwmtQuiz {
     private int id;
     private String question;
     private String[] answerArray;
-    private int rightAnswer;
+    private String rightAnswer;
 
 
-    public DwmtQuiz(int id, String question, String answer1, String answer2, String answer3, String answer4, int rightAnswer){
+    public DwmtQuiz(int id, String question, String answer1, String answer2, String answer3, String answer4, String rightAnswer){
         this.id = id;
         this.question = question;
         this.answerArray = new String[] {answer1, answer2, answer3, answer4};
@@ -28,5 +28,5 @@ public class DwmtQuiz {
         return answerArray[i];
     }
 
-    public int getRightAnswer() { return rightAnswer; }
+    public String getRightAnswer() { return rightAnswer; }
 }

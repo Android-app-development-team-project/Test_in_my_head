@@ -18,17 +18,11 @@ import android.widget.Toast;
 public class MenuActivity extends AppCompatActivity {
 
     private long backKeyPressedTime = 0;
-    private User user;
     private String tag = "MenuActivity";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.i(tag, "mainddd");
-        Intent intent = getIntent();
-        user = (User) intent.getSerializableExtra("user");
-        consolUser();
 
         setContentView(R.layout.activity_menu);
         Button button1 = (Button) findViewById(R.id.guessnumber);
@@ -36,7 +30,6 @@ public class MenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent myintent1 = new Intent(MenuActivity.this,GuessNumberMain.class);
-                myintent1.putExtra("user", user);
                 startActivity(myintent1);
 
             }
@@ -46,7 +39,6 @@ public class MenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent myintent2 = new Intent(MenuActivity.this,NBackMain.class);
-                myintent2.putExtra("user", user);
                 startActivity(myintent2);
             }
         });
@@ -131,25 +123,10 @@ public class MenuActivity extends AppCompatActivity {
     }
     public void onClickRankBtn(View view){
         Intent rankIntent = new Intent(MenuActivity.this, RankActivity.class);
-        rankIntent.putExtra("user", user);
         startActivity(rankIntent);
     }
     public void onClickDwmtBtn(View v){
         Intent dwmtIntent = new Intent(MenuActivity.this, DwmtMainActivity.class);
-        dwmtIntent.putExtra("user", user);
         startActivity(dwmtIntent);
-    }
-
-    public void consolUser(){
-        Log.i(tag, user.getNickname());
-        Log.i(tag, user.getnBackScore() + "");
-        Log.i(tag, user.getDwmtScore() + "");
-        Log.i(tag, user.getGuessNumberScore() + "");
-        Log.i(tag, user.getTotalScore() + "");
-    }
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        user = (User) data.getSerializableExtra("user");
     }
 }

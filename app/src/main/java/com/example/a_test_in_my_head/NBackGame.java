@@ -3,7 +3,9 @@ package com.example.a_test_in_my_head;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -26,6 +29,7 @@ public class NBackGame extends AppCompatActivity {
     private int nBackScore;
     private final float passScoreRatio = 0.28f;
     private User user;
+    private SharedPreferences spref;
     private String tag = "NBackGame";
 
     @Override
@@ -33,21 +37,21 @@ public class NBackGame extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nback_game);
 
-        Intent intent = getIntent();
-        user = (User) intent.getSerializableExtra("user");
+        spref = getSharedPreferences("user.pref", Context.MODE_PRIVATE);
+        user = new User(spref.getString("nickname", "public"), spref.getString("nBackScore", "0"), "0", "0", "0");
 
-        nBackList = new ArrayList<NBack>();
+        Intent intent = getIntent();
         mode = intent.getBooleanExtra("mode", true);          // mode: true는 랭킹 모드, false는 연습 모드
         parallel = intent.getBooleanExtra("parallel", false);
         nBackScore = 0;
 
         // intent를 통해 가져온 매개변수를 가지고 NBack 객체 초기화
+        nBackList = new ArrayList<NBack>();
         nBackList.add( new NBack(intent.getIntExtra("n", 2),
                 intent.getIntExtra("examLength", 7),
                 intent.getIntExtra("delayTime", 2),
                 findViewById(R.id.examView),
                 findViewById(R.id.resultView)));
-
 
         Log.i(tag, "mode: "+ mode + "\nN: " + nBackList.get(0).getN() +
                 "\nlength: " + nBackList.get(0).getExamLength() +
@@ -205,8 +209,16 @@ public class NBackGame extends AppCompatActivity {
         if (sumScore >= Math.floor(nBackList.get(0).getExamLength()*passScoreRatio) && mode) {                      // 합격 점수 이상일 때
             Log.i(tag, "nBackScore: " + nBackScore + ", user.getnBackScore(): " + user.getnBackScore()
                     +", Math.round(sumScore): " + Math.round(sumScore) +" , sumScore: " + sumScore);
-            if (Integer.parseInt(user.getnBackScore()) < nBackScore)
+
+            if (user.getNickname().equals("public"))
+                Toast.makeText(this, "public 유저는 점수를 랭크에 저장할 수 없습니다!", Toast.LENGTH_SHORT).show();
+            else if (Integer.parseInt(user.getnBackScore()) < nBackScore) {
                 user.setScore(this, "N_Back", nBackScore);
+                SharedPreferences.Editor editor = spref.edit();
+                editor.putString("nickname", user.getnBackScore());
+                editor.commit();
+                Toast.makeText(this, "랭크에 저장되었습니다!", Toast.LENGTH_SHORT).show();
+            }
             levelUP();
         }
     }
