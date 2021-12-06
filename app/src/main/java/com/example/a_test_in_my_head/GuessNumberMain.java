@@ -39,9 +39,8 @@ public class GuessNumberMain extends AppCompatActivity {
             Toast.makeText(this,"뒤로가기 버튼을 한번 더 누르시면 return home!",Toast.LENGTH_SHORT).show();
             GuessNumberInGame.score = 0;
             return;
-        }
-        if(System.currentTimeMillis()<=backKeyPressedTime+2000){
-            Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+        } else {
+            Intent intent = new Intent(getApplicationContext(),MenuActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
             finish();

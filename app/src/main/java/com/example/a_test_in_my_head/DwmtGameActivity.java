@@ -2,7 +2,9 @@ package com.example.a_test_in_my_head;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -17,8 +19,7 @@ import android.widget.Toast;
 public class DwmtGameActivity extends AppCompatActivity {
 
     private final int numberOfQuestions = 60;
-    private long backKeyPressedTime = 0;
-    private Boolean playingGameFlag;
+    private long backKeyPressedTime;
     private DwmtMetronome metronome;
     private int answerType;
     private int checkType;
@@ -30,9 +31,12 @@ public class DwmtGameActivity extends AppCompatActivity {
     private Button startBtn;
     private Button metronomeBtn;
     private DwmtQuiz[] quizArray;
-    private int score;
+    private SharedPreferences spref;
+    private int maxScore;
+    private int currentScore;
     private String userAnswer;
     private int metronemeCnt;
+    private User user;
     String tag = "DwmtGameActivity";
 
     @Override
@@ -44,12 +48,19 @@ public class DwmtGameActivity extends AppCompatActivity {
         metronome = new DwmtMetronome(this);
         answerType = intent.getIntExtra("answerType", 1);
         checkType = intent.getIntExtra("checkType", 1);
+        backKeyPressedTime = 0;
         questionNumber = 0;
-        score = 0;
+        currentScore = 0;
+
+        spref = getSharedPreferences("user.pref", Context.MODE_PRIVATE);
+        maxScore = Integer.parseInt(spref.getString("dwmtScore", "0"));
+        user = new User(spref.getString("nickname", "public"), "0", spref.getString("dwmtScore", "0"), "0", "0");
+
         answerBtnArray = new Button[4];
         startBtn = findViewById(R.id.dwmtStartBtn);
         metronomeAnswer = findViewById(R.id.metronomeAnswer);
         metronomeBtn = findViewById(R.id.metronomeBtn);
+
 
         quizArray = new DwmtQuiz[numberOfQuestions];
         int[] answerBtnID = new int[] {R.id.answer1, R.id.answer2, R.id.answer3, R.id.answer4};
@@ -118,8 +129,7 @@ public class DwmtGameActivity extends AppCompatActivity {
     }
 
     public void gameStart(View v){
-        playingGameFlag = true;
-        score += 3;
+        currentScore += 3;
         
         shuffleQuizArray(quizArray);                // 셔플
         metronome.setRandomCnt();
@@ -141,7 +151,7 @@ public class DwmtGameActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (metronome.getCnt() > 0 && playingGameFlag) {
+                if (metronome.getCnt() > 0 ) {
                     metronome.play();
                     handler.postDelayed(this, 1000);
                 }
@@ -168,27 +178,27 @@ public class DwmtGameActivity extends AppCompatActivity {
         }
 
         int cntAnswer = Integer.parseInt(metronomeAnswer.getText().toString());
-        Log.i(tag, "Score 계산 전: " + score);
+        Log.i(tag, "Score 계산 전: " + currentScore);
         Log.i(tag, "cntAnswer: " + cntAnswer + "   metronemeCnt: " + metronemeCnt);
 
-        score = score - Math.abs(metronemeCnt - cntAnswer);
-        Log.i(tag, "Score2: " + score);
+        currentScore = currentScore - Math.abs(metronemeCnt - cntAnswer);
+        Log.i(tag, "Score2: " + currentScore);
         Log.i(tag, "(metronemeCnt/3): " + (metronemeCnt/3) + "   userAnswer.length(): " + userAnswer.length());
 
-        score = score - ((metronemeCnt/3) - userAnswer.length());           // 메트로놈 수에 따른 문제 길이 = 메트로놈 수/3
-        Log.i(tag, "Score3: " + score);
+        currentScore = currentScore - ((metronemeCnt/3) - userAnswer.length());           // 메트로놈 수에 따른 문제 길이 = 메트로놈 수/3
+        Log.i(tag, "Score3: " + currentScore);
 
         caculateScore();
-        Log.i(tag, "caculateScore(): " + score);
+        Log.i(tag, "caculateScore(): " + currentScore);
 
-        questionView.setText("Score: " + score);
+        questionView.setText("Score: " + currentScore);
 
         metronomeAnswer.setVisibility(View.GONE);
         v.setVisibility(View.GONE);
         startBtn.setVisibility(View.VISIBLE);                      // start Btn 다시 Visible
     }
     
-    // 숫자가 아닌 문자가 있는지 검사하는 메소드
+    // 숫자가 아닌 문자가 있는지 검사하는 메소드          있으면 true, 없으면 false
     public Boolean CheckChar(String metronomeAnswer){
         String numberChar = "0123456789";
 
@@ -202,6 +212,14 @@ public class DwmtGameActivity extends AppCompatActivity {
     }
 
     public void caculateScore(){
+        /* 점수 시스템
+            => count 10초당 3점씩 부여 후 (메트로놈 정답 - 유저 답), 틀린 문제 수 빼기(문제는 10초당 3문제), 총 문제 수 = cnt / 3
+            합격 점수 =  (부여된 점수 * 0.7) 반 버림
+             ex) 랜덤한 카운트 = 30
+             부여 점수 = 9점
+             합격 점수 = 6점
+             문제 풀이 완료 후 -> 점수 = 부여 점수 - 메트로놈 답 차익 - 총 문제 수에서 틀린 문제 수(하나당 1점)
+        */
         for(int i=0; i<userAnswer.length(); i++){
 
 
@@ -209,30 +227,33 @@ public class DwmtGameActivity extends AppCompatActivity {
                 Log.i(tag, "정답!!!");
             else {
                 Log.i(tag, "틀림!!!");
-                score--;
+                currentScore--;
             }
         }
-        Log.i(tag, "score: " + score);
-    }
+        Log.i(tag, "score: " + currentScore);
 
-    /* 점수 방법?
-    => count 10초당 3점씩 부여 후 (메트로놈 정답 - 유저 답), 틀린 문제 수 빼기(문제는 10초당 3문제), 총 문제 수 = cnt / 3
-     합격 점수 =  (부여된 점수 * 0.7) 반 버림
-     ex) 랜덤한 카운트 = 30
-         부여 점수 = 9점
-         합격 점수 = 6점
-         문제 풀이 완료 후 -> 점수 = 부여 점수 - 메트로놈 답 차익 - 총 문제 수에서 틀린 문제 수(하나당 1점)
-     */
+        // user 최고 점수와 비교해 기록 갱신 시 DB에 저장
+        if (user.getNickname().equals("public"))
+            Toast.makeText(this, "public 유저는 점수를 랭크에 저장할 수 없습니다!", Toast.LENGTH_SHORT).show();
+        else if (currentScore > maxScore) {
+            Toast.makeText(this,"최고 점수를 갱신하셨습니다!",Toast.LENGTH_SHORT).show();
+            user.setScore(this, "DWMT", currentScore);
+            SharedPreferences.Editor editor = spref.edit();
+            editor.putString("dwmtScore", user.getDwmtScore());
+            editor.commit();
+            maxScore = currentScore;
+            Toast.makeText(this, "랭크에 저장되었습니다!", Toast.LENGTH_SHORT).show();
+        }
+    }
 
     @Override
     public void onBackPressed() {
         if(System.currentTimeMillis()>backKeyPressedTime+2000){
             backKeyPressedTime=System.currentTimeMillis();
-            Toast.makeText(this,"뒤로가기 버튼을 한번 더 누르시면 종료됩니다!",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"나가시면 현재 점수가 초기화됩니다! 상관 없으시다면 한번 더 누르세요!",Toast.LENGTH_SHORT).show();
             return;
-        }
-        if(System.currentTimeMillis()<=backKeyPressedTime+2000){
-            playingGameFlag = false;                            // Stop Game
+        } else {
+            metronome.setCnt(-100);                           // Stop Game
             finish();
         }
     }

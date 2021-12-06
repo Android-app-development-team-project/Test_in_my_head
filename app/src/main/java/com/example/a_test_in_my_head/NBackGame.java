@@ -19,6 +19,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 public class NBackGame extends AppCompatActivity {
+    private long backKeyPressedTime;
     private TextView levelTextView;
     private TextView sumResultView;
     private ArrayList<NBack> nBackList;
@@ -37,6 +38,7 @@ public class NBackGame extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nback_game);
 
+        backKeyPressedTime = 0;
         spref = getSharedPreferences("user.pref", Context.MODE_PRIVATE);
         user = new User(spref.getString("nickname", "public"), spref.getString("nBackScore", "0"), "0", "0", "0");
 
@@ -80,6 +82,18 @@ public class NBackGame extends AppCompatActivity {
         Log.i(tag, "listSize: " + nBackList.size());
     }
 
+    @Override
+    public void onBackPressed() {
+        if(System.currentTimeMillis()>backKeyPressedTime+2000){
+            backKeyPressedTime=System.currentTimeMillis();
+            Toast.makeText(this,"나가시면 현재 점수가 초기화됩니다! 상관 없으시다면 한번 더 누르세요!",Toast.LENGTH_SHORT).show();
+            return;
+        } else {
+            examNum = 10000;                         // Stop Game
+            finish();
+        }
+    }
+
     public void onClickStart(View startView) {
         startView.setVisibility(View.GONE);
 
@@ -92,7 +106,6 @@ public class NBackGame extends AppCompatActivity {
             nBackList.get(i).getResultView().setVisibility(View.GONE);
             nBackList.get(i).init();
         }
-
         threeCount(startView);
     }
 
@@ -128,8 +141,8 @@ public class NBackGame extends AppCompatActivity {
                             });
                         }
                         else
-                            Thread.sleep(1000);
-                    } catch (InterruptedException e) {       // 3초후, 3 ,2, 1,
+                            Thread.sleep(1000);             // 3초후, 3 ,2, 1,
+                    } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                 }
@@ -152,13 +165,11 @@ public class NBackGame extends AppCompatActivity {
 
             @Override
             public void run() {
-
                 if (++examNum < nBackList.get(0).getExamLength()) {                                       // 문제 푸는 구간
                     for(int i=0; i<nBackList.size(); i++){                                                          // 문제 표시구간
                         nBackList.get(i).getExamView().setTextColor(Color.parseColor(numColors[examNum % 3]));
                         nBackList.get(i).getExamView().setText(nBackList.get(i).getExam().charAt(examNum)+"");
                     }
-
                     handler.postDelayed(this, nBackList.get(0).getDelayTime());
                 }
                 else{
@@ -215,7 +226,7 @@ public class NBackGame extends AppCompatActivity {
             else if (Integer.parseInt(user.getnBackScore()) < nBackScore) {
                 user.setScore(this, "N_Back", nBackScore);
                 SharedPreferences.Editor editor = spref.edit();
-                editor.putString("nickname", user.getnBackScore());
+                editor.putString("nBackScore", user.getnBackScore());
                 editor.commit();
                 Toast.makeText(this, "랭크에 저장되었습니다!", Toast.LENGTH_SHORT).show();
             }

@@ -6,12 +6,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class DwmtSettingActivity extends AppCompatActivity {
 
     private Intent intent;
     private TextView nowAnswer;
     private TextView nowCheck;
+    private long backKeyPressedTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +21,7 @@ public class DwmtSettingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_dwmt_setting);
         intent = getIntent();
 
+        backKeyPressedTime = 0;
         nowAnswer = findViewById(R.id.nowanswer);
         nowCheck = findViewById(R.id.nowcheck);
     }
@@ -51,5 +54,18 @@ public class DwmtSettingActivity extends AppCompatActivity {
     public void onClickSettingEndBtn(View v){
         setResult(RESULT_OK, intent);
         finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(System.currentTimeMillis()>backKeyPressedTime+2000){
+            backKeyPressedTime=System.currentTimeMillis();
+            Toast.makeText(this,"뒤로가기 버튼을 한번 더 누르시면 종료됩니다!",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        else {
+            setResult(RESULT_OK, intent);                       // Stop Game
+            finish();
+        }
     }
 }

@@ -47,11 +47,11 @@ public class GuessNumberInGameHard extends AppCompatActivity {
             Toast.makeText(this,"뒤로가기 버튼을 한번 더 누르시면 종료됩니다!",Toast.LENGTH_SHORT).show();
             GuessNumberInGame.score = 0;
             return;
-        }
-        if(System.currentTimeMillis()<=backKeyPressedTime+2000){
-            finishAffinity();
-            System.runFinalization();
-            System.exit(0);
+        } else {
+            Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
         }
     }
 

@@ -26,9 +26,7 @@ public class NBackHelp extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
+                finish();
             }
         });
         TextView textView = findViewById(R.id.NBtext);
@@ -50,13 +48,6 @@ public class NBackHelp extends AppCompatActivity {
             backKeyPressedTime=System.currentTimeMillis();
             Toast.makeText(this,"뒤로가기 버튼을 한번 더 누르시면 return home!",Toast.LENGTH_SHORT).show();
             return;
-        }
-        if(System.currentTimeMillis()<=backKeyPressedTime+2000){
-            Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-            finish();
-        }
-
+        } else { finish(); }
     }
 }

@@ -53,9 +53,10 @@ public class MenuActivity extends AppCompatActivity {
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int i) {
-                                finishAffinity();
-                                System.runFinalization();
-                                System.exit(0);
+                                finish();
+//                                finishAffinity();
+//                                System.runFinalization();
+//                                System.exit(0);
                             }
                         })
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -77,12 +78,7 @@ public class MenuActivity extends AppCompatActivity {
             backKeyPressedTime=System.currentTimeMillis();
             Toast.makeText(this,"뒤로가기 버튼을 한번 더 누르시면 종료됩니다!",Toast.LENGTH_SHORT).show();
             return;
-        }
-        if(System.currentTimeMillis()<=backKeyPressedTime+2000){
-            finishAffinity();
-            System.runFinalization();
-            System.exit(0);
-        }
+        } else { finish(); }
     }
 
     @Override

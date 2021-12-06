@@ -17,10 +17,7 @@ public class NBackMain extends AppCompatActivity {
             backKeyPressedTime=System.currentTimeMillis();
             Toast.makeText(this,"뒤로가기 버튼을 한번 더 누르시면 return home!",Toast.LENGTH_SHORT).show();
             return;
-        }
-        if(System.currentTimeMillis()<=backKeyPressedTime+2000){
-            finish();
-        }
+        } else { finish(); }
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -22,7 +22,7 @@ public class DwmtMetronome {
     }
 
     public void setRandomCnt(){
-//        cnt = random.nextInt(5);
+//        cnt = random.nextInt(20) + 10;      10 ~ 30 사이의 숫자
         cnt = 10;
         if (cnt < 5)
             setRandomCnt();
@@ -36,5 +36,6 @@ public class DwmtMetronome {
     }
 
     public int getCnt(){ return cnt; }
+    public void setCnt(int cnt){ this.cnt = cnt; }
 }
 
