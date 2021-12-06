@@ -48,9 +48,8 @@ public class GuessNumberInGameHard extends AppCompatActivity {
             GuessNumberInGame.score = 0;
             return;
         } else {
-            Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
+            GuessNumberInGame.score = 0;
+            flag = false;
             finish();
         }
     }

@@ -56,7 +56,11 @@ public class GuessNumberInGame extends AppCompatActivity {
             Toast.makeText(this,"뒤로가기 버튼을 한번 더 누르시면 종료됩니다!",Toast.LENGTH_SHORT).show();
             GuessNumberInGame.score = 0;
             return;
-        } else { finish(); }
+        } else {
+            GuessNumberInGame.score = 0;
+            flag = false;
+            finish();
+        }
     }
 
     @Override
