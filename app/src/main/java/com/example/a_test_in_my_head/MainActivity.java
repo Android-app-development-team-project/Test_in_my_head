@@ -85,6 +85,9 @@ public class MainActivity extends AppCompatActivity {
                 case "Login pw fail":
                     Toast.makeText(this, "비밀번호가 틀렸습니다!", Toast.LENGTH_SHORT).show();
                     break;
+                default:
+                    Toast.makeText(this, "Error...", Toast.LENGTH_SHORT).show();
+                    break;
             }
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();

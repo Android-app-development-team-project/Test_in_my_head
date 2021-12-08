@@ -36,7 +36,7 @@
             android:name=".GuessNumberHelp"
             android:exported="true" />
         <activity
-            android:name=".DWDMHelp"
+            android:name=".DwmtHelp"
             android:exported="true" />
         <activity
             android:name=".GuessNumberMain"

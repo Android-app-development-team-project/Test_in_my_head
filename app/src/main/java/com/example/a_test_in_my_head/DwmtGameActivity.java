@@ -171,9 +171,6 @@ public class DwmtGameActivity extends AppCompatActivity {
     public void onClickMetronomeBtn(View v){
         if (CheckChar(metronomeAnswer.getText().toString())){
             Toast.makeText(this,"정답에 문자가 들어갔습니다!",Toast.LENGTH_SHORT).show();
-            metronomeAnswer.setVisibility(View.GONE);
-            v.setVisibility(View.GONE);
-            startBtn.setVisibility(View.VISIBLE);
             return;
         }
 
